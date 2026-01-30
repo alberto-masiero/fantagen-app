@@ -59,3 +59,19 @@ body {
 ion-content {
   --background: #ffffff !important;
 }
+
+ion-app, ion-router-outlet, ion-content, .ion-page {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+ion-content {
+  --background: #ffffff !important;
+  color: #111111 !important;
+}
+
+* {
+  text-shadow: none !important;
+}
