@@ -1,18 +1,56 @@
 <div class="pitch">
-  <div class="markings">
-    <!-- linee/porte -->
-  </div>
+  <!-- SOLO overlay (bordo + vignetta). Non metterci dentro porte/linee -->
+  <div class="markings"></div>
 
+  <!-- LINEE -->
+  <div class="halfway"></div>
+  <div class="center-circle"></div>
+  <div class="center-spot"></div>
+
+  <!-- AREE -->
+  <div class="penalty-area top"></div>
+  <div class="penalty-area bottom"></div>
+
+  <div class="goal-area top"></div>
+  <div class="goal-area bottom"></div>
+
+  <!-- DISCHETTO + ARCO -->
+  <div class="penalty-spot top"></div>
+  <div class="penalty-spot bottom"></div>
+
+  <div class="penalty-arc top"></div>
+  <div class="penalty-arc bottom"></div>
+
+  <!-- PORTE (fuori da .markings, così non vengono coperte dall'overlay) -->
+  <div class="goal top"></div>
+  <div class="goal bottom"></div>
+
+  <!-- ANGOLI -->
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <!-- PLAYERS -->
   <ng-container *ngFor="let s of spots(); let i = index">
     <div class="spot" [style.top.%]="s.top" [style.left.%]="s.left">
-
-        <div class="slot" [attr.data-slot]="i">
-
-        <div class="player" *ngIf="playerAt(i) as p" (pointerdown)="dragFromField.emit({ ev: $event, player: p })">
+      <div class="slot" [attr.data-slot]="i">
+        <div
+          class="player"
+          *ngIf="playerAt(i) as p"
+          (pointerdown)="dragFromField.emit({ ev: $event, player: p })"
+        >
           <div class="jersey">
             <div class="collar"></div>
-            <img *ngIf="p.teamLogo; else teamText" class="logo" [src]="p.teamLogo" [alt]="p.team ?? 'team'">
-            <ng-template #teamText><div class="num">{{ p.team }}</div></ng-template>
+            <img
+              *ngIf="p.teamLogo; else teamText"
+              class="logo"
+              [src]="p.teamLogo"
+              [alt]="p.team ?? 'team'"
+            />
+            <ng-template #teamText>
+              <div class="num">{{ p.team }}</div>
+            </ng-template>
           </div>
 
           <div class="label">
@@ -30,7 +68,6 @@
             <div class="pname">slot</div>
           </div>
         </div>
-
       </div>
     </div>
   </ng-container>
