@@ -83,7 +83,7 @@ async toggle(p: Player) {
 
   goFormation() {
     if (!this.squad.isCompleteSquad()) return;
-    this.router.navigateByUrl('/formation');
+    this.router.navigate(['/formation']);
   }
 
   reset() {
