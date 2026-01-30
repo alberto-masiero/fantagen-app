@@ -32,7 +32,11 @@ jobs:
 
       - name: Build (Ionic/Angular)
         run: |
-          npx ionic build --base-href /${{ github.event.repository.name }}/
+          npx ionic build  --base-href /${{ github.event.repository.name }}/ --deploy-url /${{ github.event.repository.name }}/
+
+      - name: SPA fallback (404 -> index)
+        run: |
+          cp www/index.html www/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
