@@ -32,7 +32,7 @@ jobs:
 
       - name: Build (Ionic/Angular)
         run: |
-          npx ionic build -- --configuration production --base-href /${{ github.event.repository.name }}/
+          npx ionic build --base-href /${{ github.event.repository.name }}/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
