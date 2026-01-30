@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [IonicModule, RouterModule],
+  standalone: false,
+  styleUrls: ['app.component.scss'],
   templateUrl: './app.component.html',
 })
 export class AppComponent {}
