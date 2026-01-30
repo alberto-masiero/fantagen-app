@@ -1,0 +1,17 @@
+.topbar { display: grid; gap: 10px; }
+.counters { display:flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  font-size: 13px;
+}
+.row1 { display:flex; align-items:center; gap: 10px; }
+.tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.08);
+}
+.rating { margin-left:auto; opacity:.85; }
+.row2 { opacity:.7; font-size: 13px; margin-top: 2px; }

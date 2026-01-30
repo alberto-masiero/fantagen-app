@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Formazione</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-segment
+    [value]="module()"
+    (ionChange)="onModuleChange($event)">
+    <ion-segment-button value="4-4-2"><ion-label>4-4-2</ion-label></ion-segment-button>
+    <ion-segment-button value="4-3-3"><ion-label>4-3-3</ion-label></ion-segment-button>
+    <ion-segment-button value="4-5-1"><ion-label>4-5-1</ion-label></ion-segment-button>
+    <ion-segment-button value="3-4-3"><ion-label>3-4-3</ion-label></ion-segment-button>
+    <ion-segment-button value="3-5-2"><ion-label>3-5-2</ion-label></ion-segment-button>
+    <ion-segment-button value="5-3-2"><ion-label>5-3-2</ion-label></ion-segment-button>
+<ion-segment-button value="5-4-1"><ion-label>5-4-1</ion-label></ion-segment-button>
+  </ion-segment>
+
+    
+
+
+
+    <ion-card>
+      <app-pitch
+  [module]="module()"
+  [starters]="starters()"
+  (dragFromField)="startDrag($event.ev, $event.player, 'field')"
+  >
+</app-pitch>
+      <ion-card-header>
+        <ion-card-title>Panchina</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="bench-grid"
+            >
+          <div class="bench-item"
+               *ngFor="let p of bench()"
+               (pointerdown)="startDrag($event, p, 'bench')">
+            <!-- tuo layout con logo -->
+            <div class="bench-left">
+              <div class="logo-wrap">
+                <img *ngIf="p.teamLogo" class="team-logo" [src]="p.teamLogo" [alt]="p.team ?? 'team'">
+                <div *ngIf="!p.teamLogo" class="team-fallback">{{ (p.team ?? '?') | slice:0:3 }}</div>
+              </div>
+            </div>
+
+            <div class="bench-mid">
+              <div class="bench-name">{{ p.name }}</div>
+              <div class="bench-team">{{ p.team }}</div>
+            </div>
+
+            <div class="bench-right">
+              <div class="pill role">{{ p.role }}</div>
+              <div class="pill rating">{{ p.rating }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="drag-ghost" *ngIf="dragging()"
+     [style.transform]="'translate3d(' + ghostX() + 'px,' + ghostY() + 'px,0)'">
+  <div class="ghost-jersey">
+    <img *ngIf="dragging()?.teamLogo" [src]="dragging()?.teamLogo" />
+    <span *ngIf="!dragging()?.teamLogo">{{ (dragging()?.team ?? '') | slice:0:3 }}</span>
+  </div>
+</div>
+
+<!-- campo -->
+
+      </ion-card-content>
+    </ion-card>
+
+
+  <ng-template #notReady>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Rosa non completa</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Completa la selezione: 3 POR, 8 DIF, 8 CEN, 6 ATT (totale 25).
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+</ion-content>

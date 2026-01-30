@@ -1,6 +1,13 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-import { AppModule } from './app/app.module';
+import { provideIonicAngular } from '@ionic/angular/standalone';
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+bootstrapApplication(AppComponent, {
+  ...appConfig,
+  providers: [
+    provideIonicAngular(),
+    ...(appConfig.providers ?? []),
+  ],
+}).catch(console.error);

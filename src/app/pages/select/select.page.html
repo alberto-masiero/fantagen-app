@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Seleziona Rosa (25)</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="reset()">Reset</ion-button>
+      <ion-button expand="block" fill="outline" (click)="randomSquad()">
+  🎲 Random 25 (test)
+</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="topbar">
+    <ion-searchbar placeholder="Cerca nome o squadra" (ionInput)="onSearch($event)"></ion-searchbar>
+
+    <ion-segment value="ALL" (ionChange)="onRoleChange($event)">
+      <ion-segment-button value="ALL"><ion-label>Tutti</ion-label></ion-segment-button>
+      <ion-segment-button value="GK"><ion-label>POR</ion-label></ion-segment-button>
+      <ion-segment-button value="DEF"><ion-label>DIF</ion-label></ion-segment-button>
+      <ion-segment-button value="MID"><ion-label>CEN</ion-label></ion-segment-button>
+      <ion-segment-button value="FWD"><ion-label>ATT</ion-label></ion-segment-button>
+    </ion-segment>
+
+    <div class="counters">
+      <div class="pill">Tot: <b>{{ total() }}/25</b></div>
+      <div class="pill">POR <b>{{ counts().GK }}/3</b></div>
+      <div class="pill">DIF <b>{{ counts().DEF }}/8</b></div>
+      <div class="pill">CEN <b>{{ counts().MID }}/8</b></div>
+      <div class="pill">ATT <b>{{ counts().FWD }}/6</b></div>
+    </div>
+
+    <ion-button expand="block" [disabled]="!complete()" (click)="goFormation()">
+      Vai a Formazione
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="!loading(); else skel">
+    <ion-item button detail="false" *ngFor="let p of filtered()" (click)="toggle(p)">
+      <ion-label>
+        <div class="row1">
+          <b>{{ p.name }}</b>
+          <span class="tag">{{ p.role }}</span>
+          <span class="rating">{{ p.rating }}</span>
+        </div>
+        <div class="row2">{{ p.team }}</div>
+      </ion-label>
+
+      <ion-checkbox slot="end" [checked]="isSelected(p)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #skel>
+    <ion-skeleton-text animated style="height: 18px; width: 60%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="height: 18px; width: 85%"></ion-skeleton-text>
+    <ion-skeleton-text animated style="height: 18px; width: 75%"></ion-skeleton-text>
+  </ng-template>
+</ion-content>

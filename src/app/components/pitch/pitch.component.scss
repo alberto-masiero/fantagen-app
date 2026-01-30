@@ -1,0 +1,307 @@
+.pitch {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 2 / 3;
+  margin: 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+
+  // erba con strisce
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.00) 0%,
+      rgba(255,255,255,0.00) 6%,
+      rgba(255,255,255,0.05) 6%,
+      rgba(255,255,255,0.05) 12%
+    ),
+    linear-gradient(180deg, #0e7a43, #0b6237);
+
+  // cornice “bordo campo”
+  border: 2px solid rgba(255,255,255,.18);
+}
+
+.markings {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  // overlay linee (bianche, realistiche)
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border: 2px solid rgba(255,255,255,.45);
+    border-radius: 14px;
+  }
+
+  // leggera vignettatura per profondità
+  &:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 30%, rgba(255,255,255,.12), rgba(0,0,0,.15));
+    opacity: .35;
+  }
+}
+
+.halfway {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.45);
+}
+
+.center-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+}
+
+.center-spot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,.55);
+  border-radius: 50%;
+}
+
+.penalty-area {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  height: 23%;
+  border: 2px solid rgba(255,255,255,.45);
+  border-left: none;
+  border-right: none;
+
+  &.top { top: 18px; border-top: none; }
+  &.bottom { bottom: 18px; border-bottom: none; }
+}
+
+.goal-area {
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  height: 11%;
+  border: 2px solid rgba(255,255,255,.45);
+  border-left: none;
+  border-right: none;
+
+  &.top { top: 18px; border-top: none; }
+  &.bottom { bottom: 18px; border-bottom: none; }
+}
+
+.penalty-spot {
+  position: absolute;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.55);
+  border-radius: 50%;
+
+  &.top { top: calc(18px + 17%); }
+  &.bottom { bottom: calc(18px + 17%); }
+}
+
+.penalty-arc {
+  position: absolute;
+  left: 50%;
+  width: 22%;
+  aspect-ratio: 1 / 1;
+  transform: translateX(-50%);
+  border: 2px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+
+  // “taglia” l’arco per farlo sembrare esterno all’area
+  &.top {
+    top: calc(18px + 23% - 11%);
+    clip-path: inset(50% 0 0 0);
+  }
+  &.bottom {
+    bottom: calc(18px + 23% - 11%);
+    clip-path: inset(0 0 50% 0);
+  }
+}
+
+.goal {
+  position: absolute;
+  left: 38%;
+  right: 38%;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,.55);
+  background: rgba(255,255,255,.07);
+  border-radius: 0 0 10px 10px;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.10);
+
+  &.top {
+    top: 18px;
+    transform: translateY(-45%);
+    border-radius: 10px 10px 0 0;
+  }
+
+  &.bottom {
+    bottom: 18px;
+    transform: translateY(45%);
+  }
+}
+
+.corner {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border: 2px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+
+  &.tl { top: 18px; left: 18px; clip-path: inset(50% 0 0 50%); }
+  &.tr { top: 18px; right: 18px; clip-path: inset(50% 50% 0 0); }
+  &.bl { bottom: 18px; left: 18px; clip-path: inset(0 0 50% 50%); }
+  &.br { bottom: 18px; right: 18px; clip-path: inset(0 50% 50% 0); }
+}
+
+/* players */
+.spot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 26%;
+  max-width: 140px;
+  z-index: 2;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  user-select: none;
+}
+
+.jersey {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.28);
+  box-shadow:
+    0 10px 18px rgba(0,0,0,.22),
+    inset 0 0 0 2px rgba(255,255,255,.06);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+}
+
+.collar {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 16px;
+  height: 10px;
+  transform: translateX(-50%);
+  border: 2px solid rgba(255,255,255,.55);
+  border-bottom: none;
+  border-radius: 0 0 10px 10px;
+  opacity: .55;
+}
+
+.num {
+  font-weight: 900;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 2px 6px rgba(0,0,0,.45);
+  text-align: center;
+  padding: 0 4px;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 38px;
+}
+
+.label {
+  min-width: 0;
+  max-width: 140px;
+  text-align: left;
+  padding: 6px 8px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.16);
+  border: 1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(6px);
+}
+
+.pname {
+  font-weight: 800;
+  font-size: 12px;
+  color: #fff;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prate {
+  margin-top: 2px;
+  font-size: 11px;
+  color: rgba(255,255,255,.85);
+  font-weight: 700;
+}
+
+.player.ghost {
+  opacity: .5;
+}
+
+.logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.45));
+}
+
+.jersey {
+  // ...lascia il resto uguale
+  display: grid;
+  place-items: center;
+}
+.slot {
+  width: 100%;
+  border-radius: 16px;
+  padding: 4px;
+  border-radius: 16px;
+  transition: outline-color .12s ease, filter .12s ease, transform .12s ease;
+}
+
+.slot.drop-hover {
+  outline: 2px dashed rgba(255,255,255,.65);
+  outline-offset: 4px;
+    transform: scale(1.02);
+}
+
+.slot.drop-ok {
+  outline: 2px dashed rgba(255,255,255,.65);
+  outline-offset: 4px;
+}
+
+.slot.drop-bad {
+  outline: 2px dashed rgba(255,120,120,.75);
+  outline-offset: 4px;
+  filter: grayscale(.25) brightness(.95);
+}
+
+
+

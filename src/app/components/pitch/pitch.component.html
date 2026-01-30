@@ -1,0 +1,37 @@
+<div class="pitch">
+  <div class="markings">
+    <!-- linee/porte -->
+  </div>
+
+  <ng-container *ngFor="let s of spots(); let i = index">
+    <div class="spot" [style.top.%]="s.top" [style.left.%]="s.left">
+
+        <div class="slot" [attr.data-slot]="i">
+
+        <div class="player" *ngIf="playerAt(i) as p" (pointerdown)="dragFromField.emit({ ev: $event, player: p })">
+          <div class="jersey">
+            <div class="collar"></div>
+            <img *ngIf="p.teamLogo; else teamText" class="logo" [src]="p.teamLogo" [alt]="p.team ?? 'team'">
+            <ng-template #teamText><div class="num">{{ p.team }}</div></ng-template>
+          </div>
+
+          <div class="label">
+            <div class="pname">{{ p.name }}</div>
+            <div class="prate">{{ p.rating }}</div>
+          </div>
+        </div>
+
+        <div class="player ghost" *ngIf="!playerAt(i)">
+          <div class="jersey">
+            <div class="collar"></div>
+            <div class="num">+</div>
+          </div>
+          <div class="label">
+            <div class="pname">slot</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+</div>
