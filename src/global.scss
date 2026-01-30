@@ -39,6 +39,7 @@ html, body {
   height: 100%;
   width: 100%;
   margin: 0;
+  padding: 0;
 }
 
 ion-app, ion-router-outlet {
@@ -48,20 +49,4 @@ ion-app, ion-router-outlet {
 
 ion-router-outlet {
   display: block;
-}
-
-/* ion-content deve occupare lo spazio disponibile */
-ion-content {
-  --background: var(--ion-background-color, #fff);
-}
-
-/* Evita che qualche wrapper “stringa” il layout */
-.ion-page {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-ion-content {
-  flex: 1 1 auto;
 }
