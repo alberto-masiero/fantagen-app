@@ -36,6 +36,8 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/fantagen-app/",
+              "deployUrl": "/fantagen-app/",
               "budgets": [
                 {
                   "type": "initial",
