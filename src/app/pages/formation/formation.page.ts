@@ -44,17 +44,17 @@
 import { Component, signal, computed, effect } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 
 import { SquadService } from '../../services/squad.service';
 import { PitchComponent } from '../../components/pitch/pitch.component';
 import type { Player, Role } from '../../models/player.model';
 import { FormationService, Module } from 'src/app/services/formations.service';
 type DragOrigin = 'bench' | 'field';
+
 @Component({
   selector: 'app-formation',
   standalone: true,
-  imports: [IonicModule, CommonModule, DragDropModule, PitchComponent],
+  imports: [IonicModule, CommonModule, PitchComponent],
   templateUrl: './formation.page.html',
   styleUrls: ['./formation.page.scss'],
 })
@@ -300,25 +300,5 @@ if (p) this.markCompatibleSlots(p);
   }
 
   /** Drop sul contenitore panchina: se trascini un titolare lo rimandi in panca */
-  onBenchDrop(ev: CdkDragDrop<Player[]>) {
-    const data = (ev.item.data as any) as { player: Player };
-    const p = data?.player;
-    if (!p) return;
-
-    const starters = this.starters().slice();
-    const bench = this.bench().slice();
-
-    const sIdx = starters.findIndex(x => x.id === p.id);
-    if (sIdx >= 0) {
-      starters.splice(sIdx, 1);
-      // per non rompere gli 11 slot, rimettiamo uno “vuoto” (gestito dal pitch) -> usiamo placeholder null?
-      // meglio: reinseriamo il migliore dalla panchina per quel ruolo (semplice): prendiamo il primo
-      const replacement = bench.shift() ?? null;
-      if (replacement) starters.splice(sIdx, 0, replacement);
-      bench.unshift(p);
-
-      this.starters.set(starters);
-      this.bench.set(bench);
-    }
-  }
+  
 }
