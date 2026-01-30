@@ -65,3 +65,8 @@ ion-router-outlet {
 ion-content {
   --background: var(--ion-background-color);
 }
+
+.ion-page.ion-page-invisible {
+  opacity: 1 !important;
+  transform: none !important;
+}
