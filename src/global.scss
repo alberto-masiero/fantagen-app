@@ -33,8 +33,8 @@
  */
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+@import "@ionic/angular/css/palettes/dark.class.css"; 
+// @import "@ionic/angular/css/palettes/dark.system.css";
 html, body {
   height: 100%;
   width: 100%;
@@ -49,4 +49,19 @@ ion-app, ion-router-outlet {
 
 ion-router-outlet {
   display: block;
+}
+
+
+:root {
+  --ion-background-color: #ffffff;
+  --ion-text-color: #111111;
+
+  --ion-item-background: #ffffff;
+  --ion-card-background: #ffffff;
+  --ion-toolbar-background: #ffffff;
+  --ion-toolbar-color: #111111;
+}
+
+ion-content {
+  --background: var(--ion-background-color);
 }
