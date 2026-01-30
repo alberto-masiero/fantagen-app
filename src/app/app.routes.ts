@@ -6,5 +6,5 @@ export const routes: Routes = [
   { path: '', redirectTo: 'select', pathMatch: 'full' },
   { path: 'select', component: SelectPage },
   { path: 'formation', component: FormationPage },
-  
+  { path: '**', redirectTo: 'select' }, // utile per evitare “vuoto” su route sconosciute
 ];
