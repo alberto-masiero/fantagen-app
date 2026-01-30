@@ -38,18 +38,24 @@
 
 html, body {
   height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 ion-app, ion-router-outlet, ion-content {
   height: 100%;
+  width: 100%;
+}
+
+ion-router-outlet {
+  display: block;
+}
+
+body {
+  position: static !important;
+  overflow: auto !important;
 }
 
 ion-content {
-  --background: #ffffff;
-  display: block !important;
-}
-
-:root {
-  --ion-background-color: #ffffff;
-  --ion-text-color: #111111;
+  --background: #ffffff !important;
 }
