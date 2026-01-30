@@ -35,14 +35,13 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
-
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
 }
 
-ion-app, ion-router-outlet, ion-content {
+ion-app, ion-router-outlet {
   height: 100%;
   width: 100%;
 }
@@ -51,27 +50,18 @@ ion-router-outlet {
   display: block;
 }
 
-body {
-  position: static !important;
-  overflow: auto !important;
+/* ion-content deve occupare lo spazio disponibile */
+ion-content {
+  --background: var(--ion-background-color, #fff);
+}
+
+/* Evita che qualche wrapper “stringa” il layout */
+.ion-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 ion-content {
-  --background: #ffffff !important;
-}
-
-ion-app, ion-router-outlet, ion-content, .ion-page {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-  filter: none !important;
-}
-
-ion-content {
-  --background: #ffffff !important;
-  color: #111111 !important;
-}
-
-* {
-  text-shadow: none !important;
+  flex: 1 1 auto;
 }
