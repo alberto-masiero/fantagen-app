@@ -291,3 +291,170 @@
   .logo{ width:24px; height:24px; }
   .label{ max-width:140px; padding:6px 9px; background:rgba(0,0,0,.34); }
 }
+
+/* =========================
+   SUPER REALISM UPGRADE
+   (incolla in fondo)
+   ========================= */
+
+/* luce da stadio + micro grana */
+.pitch{
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.18), rgba(255,255,255,0) 55%),
+    radial-gradient(120% 80% at 50% 110%, rgba(0,0,0,.20), rgba(0,0,0,0) 55%),
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,0.00) 0%,
+      rgba(255,255,255,0.00) 6%,
+      rgba(255,255,255,0.06) 6%,
+      rgba(255,255,255,0.06) 12%
+    ),
+    linear-gradient(180deg, #0f854a, #0b5d36);
+}
+
+/* grana (noise fake) con pattern leggero */
+.pitch::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.10;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0 1px, rgba(255,255,255,0) 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 1px, rgba(0,0,0,0) 1px 4px);
+  mix-blend-mode: soft-light;
+}
+
+/* linee "gesso" più realistiche: leggero bleed + glow */
+.halfway,
+.center-circle,
+.penalty-area,
+.goal-area,
+.penalty-arc,
+.corner{
+  filter: drop-shadow(0 0 1px rgba(255,255,255,.25))
+          drop-shadow(0 0 6px rgba(255,255,255,.12));
+}
+
+/* centrocampo: rendi il cerchio più naturale */
+.center-circle{
+  border-color: rgba(255,255,255,.42);
+}
+.halfway{
+  background: rgba(255,255,255,.40);
+}
+
+/* vignetta più cinematografica (ma non copre i players) */
+.markings::after{
+  opacity:.32;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.12), rgba(0,0,0,.18)),
+    radial-gradient(circle at 50% 80%, rgba(0,0,0,.25), rgba(0,0,0,0) 55%);
+}
+
+/* =========================
+   GOALS: rete + profondità
+   ========================= */
+
+.goal{
+  border-color: rgba(255,255,255,.80);
+  background: rgba(255,255,255,.10);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.08),
+    0 10px 18px rgba(0,0,0,.18);
+}
+
+/* rete con pseudo-elemento */
+.goal::after{
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius: inherit;
+  opacity:.38;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,.55) 0 1px,
+      rgba(255,255,255,0) 1px 6px
+    ),
+    repeating-linear-gradient(-45deg,
+      rgba(255,255,255,.55) 0 1px,
+      rgba(255,255,255,0) 1px 6px
+    );
+  mix-blend-mode: overlay;
+}
+
+/* profondità: “apertura” interna */
+.goal::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius: inherit;
+  opacity:.55;
+  box-shadow: inset 0 -6px 12px rgba(0,0,0,.22);
+  pointer-events:none;
+}
+
+/* =========================
+   PLAYER: ombra + glass più reale
+   ========================= */
+
+.spot{
+  filter: drop-shadow(0 10px 16px rgba(0,0,0,.20));
+}
+
+.jersey{
+  background: rgba(255,255,255,.16);
+  box-shadow:
+    0 14px 22px rgba(0,0,0,.28),
+    inset 0 0 0 2px rgba(255,255,255,.06),
+    inset 0 -10px 16px rgba(0,0,0,.12);
+}
+
+.label{
+  background: rgba(0,0,0,.34);
+  border-color: rgba(255,255,255,.24);
+  box-shadow:
+    0 12px 20px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+.pname{
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.60),
+    0 0 10px rgba(0,0,0,.22);
+}
+
+/* =========================
+   Subtle pitch perspective (molto delicata)
+   ========================= */
+.pitch{
+  transform: translateZ(0);
+}
+@media (min-width: 520px){
+  .pitch{
+    perspective: 900px;
+  }
+  .pitch > *{
+    transform: translateZ(0);
+  }
+}
+
+/* =========================
+   Drag states: più “wow”
+   ========================= */
+.slot.drop-hover{
+  outline: 2px dashed rgba(255,255,255,.80);
+  outline-offset: 5px;
+  transform: scale(1.03);
+  filter: drop-shadow(0 10px 14px rgba(0,0,0,.18));
+}
+
+.slot.drop-ok{
+  outline: 2px dashed rgba(120,255,170,.85);
+  outline-offset: 5px;
+}
+
+.slot.drop-bad{
+  outline: 2px dashed rgba(255,120,120,.85);
+  outline-offset: 5px;
+}
