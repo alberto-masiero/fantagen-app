@@ -1,35 +1,21 @@
-@import "@ionic/angular/css/ionic.bundle.css";
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
 @import "./theme/variables";
 
-// @import "@ionic/angular/css/palettes/dark.system.css";
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
+/* NO dark.system su Pages */
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
 
-ion-app, ion-router-outlet {
-  height: 100%;
-  width: 100%;
-}
-
-ion-router-outlet {
-  display: block;
-}
-
-
-:root {
-  --ion-background-color: #ffffff;
-  --ion-text-color: #111111;
-
-  --ion-item-background: #ffffff;
-  --ion-card-background: #ffffff;
-  --ion-toolbar-background: #ffffff;
-  --ion-toolbar-color: #111111;
-}
-
-ion-content {
-  --background: var(--ion-background-color);
-}
+html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+ion-app, ion-router-outlet { height: 100%; width: 100%; }
+ion-router-outlet { display: block; }
 

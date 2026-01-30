@@ -1,15 +1,13 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter, RouteReuseStrategy, withHashLocation } from '@angular/router';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
-
-import { routes } from './app.routes';
+import { provideRouter, RouteReuseStrategy } from '@angular/router';
+import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular/standalone';
 import { provideHttpClient } from '@angular/common/http';
+import { routes } from './app.routes';
 
-export const appConfig: ApplicationConfig = {
+export const appConfig = {
   providers: [
     provideIonicAngular(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideRouter(routes, withHashLocation()),
-    provideHttpClient()
+    provideHttpClient(),
+    provideRouter(routes),
   ],
 };
