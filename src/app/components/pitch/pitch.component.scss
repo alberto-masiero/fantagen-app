@@ -869,3 +869,138 @@ ion-page, ion-router-outlet, .ion-page{
   white-space: nowrap;
   line-height: 1;
 }
+
+@media (max-width: 520px){
+  .trend-inline{ width: 18px; }
+}
+
+/* =========================
+   BADGE VERTICAL MOBILE
+   ========================= */
+
+.badge-card.vertical{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  padding:6px 6px 8px;
+  border-radius:14px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter: blur(6px);
+}
+
+/* ===== RIGA 1 LOGO ===== */
+
+.row-logo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.logo-mini{
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  display:grid;
+  place-items:center;
+}
+
+.logo-mini img{
+  width:18px;
+  height:18px;
+  object-fit:contain;
+}
+
+.logo-mini span{
+  font-size:9px;
+  font-weight:900;
+  color:#fff;
+}
+
+/* ===== RIGA 2 MV + TREND ===== */
+
+.row-mv{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.mv-pill{
+  font-size:10px;
+  font-weight:900;
+  padding:2px 6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+}
+
+.trend-inline{
+  font-size:11px;
+  font-weight:900;
+}
+
+.trend-inline.up{ color:#4eff8a; }
+.trend-inline.down{ color:#ff5b5b; }
+.trend-inline.eq{ color:#ccc; }
+
+/* ===== RIGA 3 NOME ===== */
+
+.row-name{
+  text-align:center;
+  width:100%;
+}
+
+.name-inline{
+  font-size:11px;
+  font-weight:900;
+  line-height:1.05;
+  color:#fff;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* ===== RIGA 4 PROGRESS ===== */
+
+.row-progress{
+  width:100%;
+}
+
+.tit-bar{
+  width:100%;
+  height:6px;
+  background:rgba(255,255,255,.12);
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.tit-fill{
+  height:100%;
+  transition:width .3s ease;
+}
+
+.tit-fill.low{ background:#ff5b5b; }
+.tit-fill.mid{ background:#ffb84e; }
+.tit-fill.high{ background:#4eff8a; }
+
+/* ===== FLAG ===== */
+
+.flag{
+  width:100%;
+  font-size:9px;
+  font-weight:900;
+  text-align:center;
+  padding:3px 0;
+  border-radius:999px;
+}
+
+.flag.inj{
+  background:rgba(255,80,80,.18);
+  color:#ff7a7a;
+}
+
+.flag.sus{
+  background:rgba(255,180,0,.18);
+  color:#ffc85a;
+}

@@ -38,58 +38,60 @@
     <div class="spot" [style.top.%]="s.top" [style.left.%]="s.left">
       <div class="slot" [attr.data-slot]="i">
  <div class="player" *ngIf="playerAt(i) as p">
-  <div class="badge-card compact">
 
-    <!-- RIGA 1: logo + nome + trend -->
-    <div class="row row1">
+  <div class="badge-card vertical">
+
+    <!-- 1️⃣ LOGO CENTRATO -->
+    <div class="row-logo">
       <div class="logo-mini">
-        <img *ngIf="p.teamLogo; else teamText"
-             [src]="p.teamLogo"
-             [alt]="p.team ?? 'team'">
-        <ng-template #teamText>
+        <img *ngIf="p.teamLogo; else txtLogo" [src]="p.teamLogo" />
+        <ng-template #txtLogo>
           <span>{{ (p.team ?? '?') | slice:0:3 }}</span>
         </ng-template>
       </div>
+    </div>
 
-      <div class="name-inline">{{ p.name }}</div>
+    <!-- 2️⃣ MV + TREND -->
+    <div class="row-mv">
+      <div class="mv-pill">MV {{ p.rating | number:'1.2-2' }}</div>
 
-      <div class="trend-inline" [attr.data-trend]="p.trend ?? '='">
-        {{ trendArrow(p.trend) }}
+      <div class="trend-inline"
+           [class.up]="p.trend === '+'"
+           [class.down]="p.trend === '-'"
+           [class.eq]="p.trend === '='">
+        <span *ngIf="p.trend === '+'">▲</span>
+        <span *ngIf="p.trend === '-'">▼</span>
+        <span *ngIf="p.trend === '='">—</span>
       </div>
     </div>
 
-    <!-- RIGA 2: MV -->
-    <div class="row row2">
-      <span class="mv-pill">MV {{ p.rating }}</span>
+    <!-- 3️⃣ NOME -->
+    <div class="row-name">
+      <div class="name-inline">{{ p.name }}</div>
     </div>
 
-    <!-- RIGA 3: Tit (bar o flag) -->
-    <div class="row row3" *ngIf="titType(p) !== 'none'">
-      <ng-container *ngIf="titType(p) === 'num'; else flagTpl">
-        <div class="tit-row">
-          <span class="tit-label">Tit</span>
-          <span class="tit-val">{{ titPercent(p) }}%</span>
+    <!-- 4️⃣ PROGRESS TITOLARITÀ -->
+    <div class="row-progress" *ngIf="p.Tit !== 'I' && p.Tit !== 'S'">
+      <div class="tit-bar">
+        <div class="tit-fill"
+             [style.width.%]="p.Tit"
+             [class.low]="p.Tit! < 40"
+             [class.mid]="p.Tit! >= 40 && p.Tit! < 70"
+             [class.high]="p.Tit! >= 70">
         </div>
-        <div class="tit-bar">
-          <div
-            class="tit-fill"
-            [class.low]="titPercent(p) < 35"
-            [class.mid]="titPercent(p) >= 35 && titPercent(p) < 70"
-            [class.high]="titPercent(p) >= 70"
-            [style.width]="titPercent(p) + '%'"
-          ></div>
-        </div>
-      </ng-container>
+      </div>
+    </div>
 
-      <ng-template #flagTpl>
-        <div class="flag" [attr.data-flag]="titFlagVal(p)">
-          {{ titFlagVal(p) === 'I' ? 'INJ' : 'SUS' }}
-        </div>
-      </ng-template>
+    <!-- Flag infortunato/squalificato -->
+    <div class="row-progress" *ngIf="p.Tit === 'I' || p.Tit === 'S'">
+      <div class="flag" [class.inj]="p.Tit === 'I'" [class.sus]="p.Tit === 'S'">
+        {{ p.Tit === 'I' ? 'Infortunato' : 'Squalificato' }}
+      </div>
     </div>
 
   </div>
 </div>
+
 
 
 
