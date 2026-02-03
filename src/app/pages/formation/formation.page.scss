@@ -62,30 +62,216 @@
   margin-top: 12px;
 }
 
+/* ===== MODULO: pill premium + mini formazione ===== */
+
 .seg-pills{
   --background: transparent;
+  display:flex;
+  padding: 6px;
   border-radius: 999px;
-  padding: 4px;
+
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(255,255,255,.10);
-  overflow-x: auto;
+  box-shadow: 0 14px 26px rgba(0,0,0,.20);
+
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  gap: 6px;
+  scroll-snap-type: x mandatory;
 }
 .seg-pills::-webkit-scrollbar{ display:none; }
 
 .seg-pills ion-segment-button{
+  scroll-snap-align: center;
+  min-width: 98px;
+  height: 40px;
+  border-radius: 999px;
+
   --color: rgba(255,255,255,.78);
   --color-checked: #eafff2;
-  --indicator-color: rgba(120,255,170,.18);
+
+  --indicator-height: 0px;
+  --indicator-color: transparent;
   --indicator-box-shadow: none;
 
-  border-radius: 999px;
-  min-width: 74px;
-  font-weight: 900;
+  transition: transform .10s ease, filter .12s ease;
+  overflow: hidden;
+}
+.seg-pills ion-segment-button:active{ transform: scale(.98); }
+
+.seg-pills ion-segment-button.segment-button-checked{
+  background: rgba(120,255,170,.18);
+  border: 1px solid rgba(120,255,170,.35);
+  filter:
+    drop-shadow(0 10px 14px rgba(0,0,0,.18))
+    drop-shadow(0 0 14px rgba(120,255,170,.20));
 }
 
-.seg-pills ion-label{
-  font-size: 12px;
+/* label interno */
+.mod-pill{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  padding: 0 12px;
+  height: 100%;
 }
+
+.mod-pill .txt{
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: .2px;
+  white-space: nowrap;
+}
+
+/* mini board */
+.mini{
+  width: 26px;
+  height: 22px;
+  border-radius: 8px;
+  position: relative;
+
+  /* campo verde invece di nero */
+  background: linear-gradient(180deg, #0f854a, #0b5d36);
+
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    0 4px 10px rgba(0,0,0,.25);
+
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* puntino base */
+:root{
+  --dot: #ffffff;
+  --dot2: rgba(255,255,255,.85);
+}
+
+
+/* helper: crea 11 dots (1 GK + linee) usando radial-gradient */
+.mini-442{
+  background-image:
+    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px), /* GK */
+    radial-gradient(circle at 18% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 4 DEF */
+    radial-gradient(circle at 18% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 4 MID */
+    radial-gradient(circle at 38% 24%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 24%, var(--dot) 0 2px, transparent 2.2px); /* 2 FWD */
+}
+
+.mini-433{
+  background-image:
+    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 18% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 4 DEF */
+    radial-gradient(circle at 28% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 3 MID */
+    radial-gradient(circle at 22% 22%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 78% 22%, var(--dot) 0 2px, transparent 2.2px); /* 3 FWD */
+}
+
+.mini-451{
+  background-image:
+    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 18% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 4 DEF */
+    radial-gradient(circle at 16% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 32% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 68% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 84% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 5 MID */
+    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px); /* 1 FWD */
+}
+
+.mini-343{
+  background-image:
+    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 28% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 3 DEF */
+    radial-gradient(circle at 18% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 38% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 4 MID */
+    radial-gradient(circle at 22% 22%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 78% 22%, var(--dot) 0 2px, transparent 2.2px); /* 3 FWD */
+}
+
+.mini-352{
+  background-image:
+    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 28% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 3 DEF */
+    radial-gradient(circle at 16% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 32% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 68% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 84% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 5 MID */
+    radial-gradient(circle at 38% 22%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 22%, var(--dot) 0 2px, transparent 2.2px); /* 2 FWD */
+}
+
+.mini-532{
+  background-image:
+    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 14% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 30% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 70% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 86% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 5 DEF */
+    radial-gradient(circle at 28% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 3 MID */
+    radial-gradient(circle at 38% 22%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 22%, var(--dot) 0 2px, transparent 2.2px); /* 2 FWD */
+}
+
+.mini-541{
+  background-image:
+    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 14% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 30% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 70% 66%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 86% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 5 DEF */
+    radial-gradient(circle at 18% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 38% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 46%, var(--dot2) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 4 MID */
+    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px); /* 1 FWD */
+}
+
+/* checked: rendi i puntini più vivi */
+.seg-pills ion-segment-button.segment-button-checked .mini{
+  background-color: rgba(0,0,0,.18);
+  border-color: rgba(120,255,170,.30);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    0 0 0 6px rgba(120,255,170,.06);
+}
+
+/* desktop */
+@media (min-width: 768px){
+  .seg-pills{ padding: 7px; gap: 7px; }
+  .seg-pills ion-segment-button{ min-width: 108px; height: 42px; }
+  .mini{ width: 28px; height: 24px; }
+}
+
 
 /* wrap */
 .formation-wrap{
@@ -228,4 +414,10 @@
     max-width: 720px;
     margin: 0 auto;
   }
+}
+.seg-pills ion-segment-button.segment-button-checked .mini{
+  border-color: rgba(120,255,170,.45);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.10),
+    0 0 12px rgba(120,255,170,.35);
 }
