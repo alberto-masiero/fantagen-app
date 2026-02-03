@@ -24,26 +24,25 @@ export class SelectPage implements OnInit {
   players = signal<PlayerWithKey[]>([]);
   loading = signal(true);
 
-  /** query "debounced" */
+  /** query */
   q = signal('');
-  private qDraft = '';              // ultimo valore digitato
-  private qTimer: any = null;       // debounce timer
-
   roleFilter = signal<RoleFilter>('ALL');
 
-  // espongo gli stati dello squad service
+  /** info salvataggio (1 sola rosa) */
+  savedAt = signal<number | null>(null);
+
+  // stati dello squad service
   selected = this.squad.selected;
   counts = this.squad.countsByRole;
   total = this.squad.total;
   complete = this.squad.isCompleteSquad;
 
-  /** filtro veloce: no toLowerCase per ogni player */
+  /** filtro veloce: usa chiave precomputata _k */
   filtered = computed(() => {
-    const q = this.q().trim();              // già lowercase
+    const q = this.q().trim(); // già lowercase
     const rf = this.roleFilter();
     const list = this.players();
 
-    // early exits = più veloce
     if (!q && rf === 'ALL') return list;
 
     return list.filter(p => {
@@ -62,7 +61,7 @@ export class SelectPage implements OnInit {
 
   ngOnInit() {
     this.playerService.loadPlayersFromExcel().subscribe({
-      next: (list) => {
+      next: async (list) => {
         // Precompute chiave di ricerca (1 volta sola)
         const enriched: PlayerWithKey[] = list.map(p => ({
           ...p,
@@ -71,6 +70,15 @@ export class SelectPage implements OnInit {
 
         this.players.set(enriched);
         this.loading.set(false);
+
+        // ✅ ripristino automatico rosa salvata (se esiste)
+        const loaded = this.squad.loadFromLocal(enriched);
+        this.refreshSavedMeta();
+
+        if (loaded) {
+          const t = await this.toast.create({ message: 'Rosa salvata ripristinata ✅', duration: 1400 });
+          t.present();
+        }
       },
       error: async () => {
         this.loading.set(false);
@@ -80,15 +88,23 @@ export class SelectPage implements OnInit {
     });
   }
 
-  /** debounce 150ms: evita filtraggio ad ogni tasto */
-onSearch(ev: any) {
-  const v =
-    ev?.detail?.value ??
-    (ev?.target as HTMLInputElement | null)?.value ??
-    '';
+  /** aggiorna info salvataggio */
+  refreshSavedMeta() {
+    this.savedAt.set(this.squad.getSavedAt());
+  }
 
-  this.q.set(v.toString().toLowerCase());
-}
+  /** input (desktop + mobile) */
+  onSearch(ev: any) {
+    const v =
+      ev?.detail?.value ??
+      (ev?.target as HTMLInputElement | null)?.value ??
+      '';
+    this.q.set(v.toString().toLowerCase());
+  }
+
+  clearSearch() {
+    this.q.set('');
+  }
 
   onRoleChange(ev: any) {
     const value = ev?.detail?.value;
@@ -125,11 +141,42 @@ onSearch(ev: any) {
     this.squad.clear();
   }
 
- clearSearch() {
-  this.qDraft = '';
-  if (this.qTimer) clearTimeout(this.qTimer);
-  this.q.set('');
-}
+  /* =========================
+     SALVATAGGIO ROSA (1 sola)
+     ========================= */
+
+  async saveSquad() {
+    if (!this.complete()) return;
+
+    this.squad.saveToLocal();
+    this.refreshSavedMeta();
+
+    const t = await this.toast.create({ message: 'Rosa salvata ✅', duration: 1400 });
+    t.present();
+  }
+
+  async restoreSavedSquad() {
+    const ok = this.squad.loadFromLocal(this.players());
+    this.refreshSavedMeta();
+
+    const t = await this.toast.create({
+      message: ok ? 'Rosa ripristinata ✅' : 'Nessuna rosa salvata',
+      duration: 1400
+    });
+    t.present();
+  }
+
+  async deleteSavedSquad() {
+    this.squad.deleteSaved();
+    this.refreshSavedMeta();
+
+    const t = await this.toast.create({ message: 'Salvataggio eliminato 🗑️', duration: 1400 });
+    t.present();
+  }
+
+  /* =========================
+     RANDOM (come avevi)
+     ========================= */
 
   async randomSquad() {
     const all = this.players();

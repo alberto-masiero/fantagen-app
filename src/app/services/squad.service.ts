@@ -8,6 +8,14 @@ const LIMITS: Record<Role, number> = {
   FWD: 6,
 };
 
+type SavedSquad = {
+  v: 1;
+  savedAt: number;
+  selectedIds: number[];
+};
+
+const LS_KEY = 'fantagen:squad:v1';
+
 @Injectable({ providedIn: 'root' })
 export class SquadService {
   private _selected = signal<Player[]>([]);
@@ -62,5 +70,61 @@ export class SquadService {
 
   remove(id: number) {
     this._selected.update(list => list.filter(p => p.id !== id));
+  }
+
+  /* =========================
+     PERSISTENZA (UNA SOLA ROSA)
+     ========================= */
+
+  /** Salva la rosa corrente (anche se non completa, se vuoi limitarla controlla isCompleteSquad()) */
+  saveToLocal() {
+    const payload: SavedSquad = {
+      v: 1,
+      savedAt: Date.now(),
+      selectedIds: this._selected().map(p => p.id),
+    };
+    localStorage.setItem(LS_KEY, JSON.stringify(payload));
+  }
+
+  /**
+   * Carica la rosa salvata ricostruendo i Player dalla lista completa (excel).
+   * Ritorna true se ha caricato qualcosa.
+   */
+  loadFromLocal(allPlayers: Player[]): boolean {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return false;
+
+    try {
+      const data = JSON.parse(raw) as SavedSquad;
+      if (!data?.selectedIds?.length) return false;
+
+      const map = new Map<number, Player>(allPlayers.map(p => [p.id, p]));
+      const list = data.selectedIds.map(id => map.get(id)).filter(Boolean) as Player[];
+
+      // se alcuni id non esistono più nel file, li scarta
+      this._selected.set(list);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  hasSaved(): boolean {
+    return !!localStorage.getItem(LS_KEY);
+  }
+
+  getSavedAt(): number | null {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return null;
+    try {
+      const data = JSON.parse(raw) as SavedSquad;
+      return data?.savedAt ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  deleteSaved() {
+    localStorage.removeItem(LS_KEY);
   }
 }

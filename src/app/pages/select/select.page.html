@@ -142,14 +142,44 @@
   </div>
 
   <!-- BOTTOM BAR -->
-  <div class="bottom-bar">
-    <div class="bb-left">
-      <div class="bb-title">Rosa</div>
-      <div class="bb-sub">{{ total() }}/25 • {{ complete() ? 'Completa' : 'In corso' }}</div>
+ <div class="bottom-bar">
+  <div class="bb-left">
+    <div class="bb-title">Rosa</div>
+    <div class="bb-sub">
+      {{ total() }}/25 • {{ complete() ? 'Completa' : 'In corso' }}
+      <span *ngIf="savedAt()"> • Salvata</span>
     </div>
+  </div>
+
+  <div class="bb-actions">
+    <!-- se esiste un salvataggio: ripristina + elimina -->
+    <ion-button
+      class="bb-btn-ghost"
+      *ngIf="savedAt()"
+      fill="clear"
+      (click)="restoreSavedSquad()">
+      Ripristina
+    </ion-button>
+
+    <ion-button
+      class="bb-btn-ghost danger"
+      *ngIf="savedAt()"
+      fill="clear"
+      (click)="deleteSavedSquad()">
+      Elimina
+    </ion-button>
+
+    <!-- salva solo se completa -->
+    <ion-button
+      class="bb-btn-secondary"
+      [disabled]="!complete()"
+      (click)="saveSquad()">
+      Salva
+    </ion-button>
 
     <ion-button class="bb-btn" [disabled]="!complete()" (click)="goFormation()">
       Vai alla formazione
     </ion-button>
   </div>
+</div>
 </ion-content>

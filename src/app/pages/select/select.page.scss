@@ -408,3 +408,74 @@
 ion-content.select-content{
   --background: #0c0d10;   /* sfondo scuro */
 }
+
+.bottom-bar{
+  position: sticky;
+  bottom: 0;
+  z-index: 60;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+
+  background: rgba(12,13,16,.92);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.bb-left{
+  min-width: 0;
+}
+.bb-title{
+  font-weight: 950;
+  color: #fff;
+  font-size: 13px;
+}
+.bb-sub{
+  margin-top: 2px;
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(255,255,255,.70);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bb-actions{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.bb-btn{
+  --border-radius: 14px;
+  font-weight: 950;
+}
+
+.bb-btn-secondary{
+  --border-radius: 14px;
+  font-weight: 950;
+  --background: rgba(120,255,170,.18);
+  --color: #eafff2;
+  --border-color: rgba(120,255,170,.35);
+  --border-style: solid;
+  --border-width: 1px;
+}
+
+.bb-btn-ghost{
+  font-weight: 950;
+  --color: rgba(255,255,255,.85);
+}
+.bb-btn-ghost.danger{
+  --color: rgba(255,120,120,.95);
+}
+
+/* su schermi stretti riduci i testi dei bottoni */
+@media (max-width: 380px){
+  .bb-btn-ghost{ font-size: 12px; }
+  .bb-btn-secondary, .bb-btn{ font-size: 12px; }
+}
