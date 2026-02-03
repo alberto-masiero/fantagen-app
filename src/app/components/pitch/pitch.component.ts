@@ -24,7 +24,7 @@ const SPOTS: Record<Module, Spot[]> = {
     { top: 42, left: 12 }, { top: 42, left: 37 }, { top: 42, left: 63 }, { top: 42, left: 88 },
 
     // ATT 2 (più su e un po’ più distanti)
-    { top: 20, left: 40 }, { top: 20, left: 60 },
+    { top: 20, left: 30 }, { top: 20, left: 70 },
   ],
 
   /* =========================
@@ -66,7 +66,7 @@ const SPOTS: Record<Module, Spot[]> = {
     { top: 88, left: 50 },
 
     // DEF 3
-    { top: 66, left: 22 }, { top: 66, left: 50 }, { top: 66, left: 78 },
+    { top: 66, left: 18 }, { top: 66, left: 50 }, { top: 66, left: 82 },
 
     // MID 4
     { top: 42, left: 12 }, { top: 42, left: 37 }, { top: 42, left: 63 }, { top: 42, left: 88 },
@@ -88,7 +88,7 @@ const SPOTS: Record<Module, Spot[]> = {
     { top: 48, left: 12 }, { top: 42, left: 32 }, { top: 40, left: 50 }, { top: 42, left: 68 }, { top: 48, left: 88 },
 
     // ATT 2
-    { top: 20, left: 40 }, { top: 20, left: 60 },
+    { top: 20, left: 30 }, { top: 20, left: 70 },
   ],
 
   /* =========================
