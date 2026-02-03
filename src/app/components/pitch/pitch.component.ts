@@ -71,12 +71,9 @@ const SPOTS: Record<Module, Spot[]> = {
 export class PitchComponent {
   @Input() module!: Module;
   @Input() starters: Player[] = [];
-@Output() dragFromField = new EventEmitter<{ ev: PointerEvent; player: Player }>();
   // collegamenti drop-list (una lista panchina + tutte le slot)
-  @Input() connectedDropIds: string[] = [];
 
 
-  @Output() dropToSlot = new EventEmitter<{ slotIndex: number; player: Player }>();
 
   spots(): Spot[] {
     return SPOTS[this.module] ?? [];

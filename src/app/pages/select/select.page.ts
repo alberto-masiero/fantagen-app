@@ -83,11 +83,11 @@ export class SelectPage implements OnInit {
   /** debounce 150ms: evita filtraggio ad ogni tasto */
 onSearch(ev: any) {
   const v =
-    ev?.detail?.value ??                            // ion-searchbar / ionInput
-    (ev?.target as HTMLInputElement | null)?.value  // input nativo
-    ?? '';
+    ev?.detail?.value ??
+    (ev?.target as HTMLInputElement | null)?.value ??
+    '';
 
-  this.q.set(v.toString());
+  this.q.set(v.toString().toLowerCase());
 }
 
   onRoleChange(ev: any) {
@@ -125,7 +125,9 @@ onSearch(ev: any) {
     this.squad.clear();
   }
 
-  clearSearch() {
+ clearSearch() {
+  this.qDraft = '';
+  if (this.qTimer) clearTimeout(this.qTimer);
   this.q.set('');
 }
 

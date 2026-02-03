@@ -47,13 +47,18 @@
   <ion-icon name="search-outline" class="search-ico"></ion-icon>
 
   <input
-    class="search-input"
-    type="text"
-    inputmode="search"
-    placeholder="Cerca per nome o squadra…"
-    [value]="q()"
-    (input)="onSearch($event)"
-  />
+  class="search-input"
+  type="text"
+  inputmode="search"
+  autocomplete="off"
+  autocapitalize="none"
+  autocorrect="off"
+  spellcheck="false"
+  placeholder="Cerca per nome o squadra…"
+  [value]="q()"
+  (input)="onSearch($event)"
+/>
+
 
   <button
     *ngIf="q()"

@@ -1,141 +1,231 @@
-.wrap { margin-top: 14px; margin-bottom: 14px; }
-ion-segment { margin-bottom: 10px; }
-.bench-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+:host { display:block; }
+
+.formation-content{
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+
+  --background: #0c0d10;
 }
 
-@media (min-width: 520px) {
-  .bench-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media (min-width: 900px) {
-  .bench-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-
-.bench-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 10px 10px;
-  border-radius: 14px;
-
-  background: rgba(0,0,0,.04);
-  border: 1px solid rgba(0,0,0,.08);
+/* header leggero */
+.formation-header ion-toolbar{
+  --background: rgba(12,13,16,.86);
+  --border-color: rgba(255,255,255,.10);
+  backdrop-filter: blur(10px);
 }
 
-.bench-left {
-  flex: 0 0 auto;
+/* HERO sticky */
+.formation-hero{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  padding: 14px 14px 10px;
+  padding-top: calc(14px + env(safe-area-inset-top));
+
+  background:
+    radial-gradient(120% 120% at 10% 0%, rgba(255,255,255,.18), rgba(255,255,255,0) 55%),
+    linear-gradient(180deg, rgba(15,15,18,.92), rgba(15,15,18,.70));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
-.logo-wrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: rgba(0,0,0,.06);
-  border: 1px solid rgba(0,0,0,.08);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+.hero-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
 }
 
-.team-logo {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
+.hero-title .h1{
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:.2px;
+}
+.hero-title .h2{
+  margin-top:3px;
+  font-size:12px;
+  font-weight:600;
+  color: rgba(255,255,255,.72);
 }
 
-.team-fallback {
+.btn-ghost{
+  --color: rgba(255,255,255,.9);
   font-weight: 900;
-  font-size: 11px;
-  letter-spacing: .4px;
-  opacity: .85;
-  text-transform: uppercase;
 }
 
-.bench-mid {
-  min-width: 0;
-  flex: 1 1 auto;
+/* segment pill look */
+.hero-module{
+  margin-top: 12px;
 }
 
-.bench-name {
-  font-weight: 800;
-  font-size: 13px;
-  line-height: 1.1;
+.seg-pills{
+  --background: transparent;
+  border-radius: 999px;
+  padding: 4px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  overflow-x: auto;
+}
+.seg-pills::-webkit-scrollbar{ display:none; }
 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.seg-pills ion-segment-button{
+  --color: rgba(255,255,255,.78);
+  --color-checked: #eafff2;
+  --indicator-color: rgba(120,255,170,.18);
+  --indicator-box-shadow: none;
+
+  border-radius: 999px;
+  min-width: 74px;
+  font-weight: 900;
 }
 
-.bench-team {
-  margin-top: 2px;
+.seg-pills ion-label{
   font-size: 12px;
-  opacity: .75;
+}
 
+/* wrap */
+.formation-wrap{
+  padding: 12px 12px 0;
+}
+
+/* card base (stile select) */
+.card{
+  border-radius: 18px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.09);
+  box-shadow: 0 16px 28px rgba(0,0,0,.18);
+  overflow: hidden;
+}
+
+/* pitch card */
+.pitch-card{
+  padding: 12px;
+}
+
+/* header bench card */
+.bench-card{
+  margin-top: 12px;
+  padding: 12px;
+}
+
+.card-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  padding: 2px 2px 10px;
+}
+
+.card-title{
+  font-weight: 950;
+  color: #fff;
+  font-size: 14px;
+}
+.card-sub{
+  color: rgba(255,255,255,.70);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* bench grid */
+.bench-grid{
+  display:grid;
+  gap: 10px;
+}
+
+.bench-item{
+  display:grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 10px;
+  align-items:center;
+
+  padding: 10px;
+  border-radius: 16px;
+
+  background: rgba(0,0,0,.20);
+  border: 1px solid rgba(255,255,255,.10);
+
+  transition: transform .08s ease, border-color .12s ease, background .12s ease;
+}
+.bench-item:active{ transform: scale(.99); }
+
+.logo-wrap{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+
+.team-logo{
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
+}
+
+.team-fallback{
+  font-weight: 900;
+  font-size: 12px;
+  color: rgba(255,255,255,.90);
+}
+
+.bench-mid{
+  min-width: 0;
+}
+
+.bench-name{
+  font-weight: 950;
+  font-size: 14px;
+  color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.bench-right {
-  display: flex;
+.bench-team{
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bench-right{
+  display:flex;
   flex-direction: column;
   gap: 6px;
-  align-items: flex-end;
-  flex: 0 0 auto;
+  align-items:flex-end;
 }
 
-.pill {
-  padding: 4px 8px;
+.pill{
+  padding: 6px 10px;
   border-radius: 999px;
-  font-size: 11px;
-  font-weight: 800;
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.7);
+  font-weight: 900;
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
 }
 
-.pill.role { opacity: .9; }
-.pill.rating { opacity: .95; }
-.bench-item.cdk-drag-preview {
-  border-radius: 14px;
-  box-shadow: 0 14px 30px rgba(0,0,0,.18);
-}
+.pill.role{ background: rgba(120,180,255,.14); border-color: rgba(120,180,255,.22); }
+.pill.rating{ background: rgba(120,255,170,.14); border-color: rgba(120,255,170,.22); }
 
-.bench-item.cdk-drag-placeholder {
-  opacity: .25;
-}
+/* spacer bottom */
+.bottom-spacer{ height: 18px; }
 
-.drag-ghost {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-  pointer-events: none;
-  width: 56px;
-  height: 56px;
-}
-
-.ghost-jersey {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(0,0,0,.25);
-  border: 1px solid rgba(255,255,255,.25);
-  display: grid;
-  place-items: center;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 18px 40px rgba(0,0,0,.25);
-
-  img {
-    width: 34px;
-    height: 34px;
-    object-fit: contain;
-  }
-  span {
-    color: #fff;
-    font-weight: 900;
-    font-size: 12px;
+/* desktop polish */
+@media (min-width: 768px){
+  .formation-wrap{
+    max-width: 720px;
+    margin: 0 auto;
   }
 }
