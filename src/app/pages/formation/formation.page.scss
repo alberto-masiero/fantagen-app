@@ -130,130 +130,166 @@
   height: 22px;
   border-radius: 8px;
   position: relative;
+  overflow: hidden;
 
-  /* campo verde invece di nero */
   background: linear-gradient(180deg, #0f854a, #0b5d36);
-
   border: 1px solid rgba(255,255,255,.18);
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.06),
     0 4px 10px rgba(0,0,0,.25);
-
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
-/* puntino base */
-:root{
-  --dot: #ffffff;
-  --dot2: rgba(255,255,255,.85);
+/* layer puntini (sempre sopra) */
+.mini::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-repeat:no-repeat;
+  background-size: 100% 100%;
+  opacity: .95;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,.35));
 }
-
+.mini-442::after,
+.mini-433::after,
+.mini-451::after,
+.mini-343::after,
+.mini-352::after,
+.mini-532::after,
+.mini-541::after{
+  background-image: var(--dots);
+}
 
 /* helper: crea 11 dots (1 GK + linee) usando radial-gradient */
 .mini-442{
-  background-image:
-    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px), /* GK */
-    radial-gradient(circle at 18% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 34% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 66% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 82% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 4 DEF */
-    radial-gradient(circle at 18% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 34% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 66% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 82% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 4 MID */
-    radial-gradient(circle at 38% 24%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 62% 24%, var(--dot) 0 2px, transparent 2.2px); /* 2 FWD */
+  --dots:
+    radial-gradient(circle at 50% 86%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 18% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 18% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 38% 24%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 24%, #fff 0 2px, transparent 2.2px);
 }
 
+
+
+/* 4-3-3 */
 .mini-433{
-  background-image:
-    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 18% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 34% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 66% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 82% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 4 DEF */
-    radial-gradient(circle at 28% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 72% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 3 MID */
-    radial-gradient(circle at 22% 22%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 78% 22%, var(--dot) 0 2px, transparent 2.2px); /* 3 FWD */
+  --dots:
+    radial-gradient(circle at 50% 86%, #fff 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 18% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 28% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 22% 22%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 18%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 78% 22%, #fff 0 2px, transparent 2.2px);
 }
 
+/* 4-5-1 */
 .mini-451{
-  background-image:
-    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 18% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 34% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 66% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 82% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 4 DEF */
-    radial-gradient(circle at 16% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 32% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 68% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 84% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 5 MID */
-    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px); /* 1 FWD */
+  --dots:
+    radial-gradient(circle at 50% 86%, #fff 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 18% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 34% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 66% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 16% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 32% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 68% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 84% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 50% 18%, #fff 0 2px, transparent 2.2px);
 }
 
+/* 3-4-3 */
 .mini-343{
-  background-image:
-    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 28% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 72% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 3 DEF */
-    radial-gradient(circle at 18% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 38% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 62% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 82% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 4 MID */
-    radial-gradient(circle at 22% 22%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 78% 22%, var(--dot) 0 2px, transparent 2.2px); /* 3 FWD */
+  --dots:
+    radial-gradient(circle at 50% 86%, #fff 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 28% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 18% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 38% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 22% 22%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 18%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 78% 22%, #fff 0 2px, transparent 2.2px);
 }
 
+/* 3-5-2 */
 .mini-352{
-  background-image:
-    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 28% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 72% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 3 DEF */
-    radial-gradient(circle at 16% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 32% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 68% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 84% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 5 MID */
-    radial-gradient(circle at 38% 22%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 62% 22%, var(--dot) 0 2px, transparent 2.2px); /* 2 FWD */
+  --dots:
+    radial-gradient(circle at 50% 86%, #fff 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 28% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 16% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 32% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 68% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 84% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 38% 22%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 22%, #fff 0 2px, transparent 2.2px);
 }
 
+/* 5-3-2 */
 .mini-532{
-  background-image:
-    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 14% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 30% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 70% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 86% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 5 DEF */
-    radial-gradient(circle at 28% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 72% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 3 MID */
-    radial-gradient(circle at 38% 22%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 62% 22%, var(--dot) 0 2px, transparent 2.2px); /* 2 FWD */
+  --dots:
+    radial-gradient(circle at 50% 86%, #fff 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 14% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 30% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 70% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 86% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 28% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 72% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 38% 22%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 22%, #fff 0 2px, transparent 2.2px);
 }
 
+/* 5-4-1 */
 .mini-541{
-  background-image:
-    radial-gradient(circle at 50% 86%, var(--dot) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 14% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 30% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 50% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 70% 66%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 86% 66%, var(--dot2) 0 2px, transparent 2.2px), /* 5 DEF */
-    radial-gradient(circle at 18% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 38% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 62% 46%, var(--dot2) 0 2px, transparent 2.2px),
-    radial-gradient(circle at 82% 46%, var(--dot2) 0 2px, transparent 2.2px), /* 4 MID */
-    radial-gradient(circle at 50% 18%, var(--dot) 0 2px, transparent 2.2px); /* 1 FWD */
+  --dots:
+    radial-gradient(circle at 50% 86%, #fff 0 2px, transparent 2.2px),
+    radial-gradient(circle at 14% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 30% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 50% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 70% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 86% 66%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 18% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 38% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 62% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+    radial-gradient(circle at 82% 46%, rgba(255,255,255,.88) 0 2px, transparent 2.2px),
+
+    radial-gradient(circle at 50% 18%, #fff 0 2px, transparent 2.2px);
 }
 
 /* checked: rendi i puntini più vivi */
