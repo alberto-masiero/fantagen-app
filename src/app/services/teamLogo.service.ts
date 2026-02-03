@@ -46,7 +46,7 @@ export class TeamLogoService {
     'pisa': 'pisa.svg',
     'verona': 'verona.svg',
     'torino': 'torino.svg',
-
+    'bologna': 'bologna.svg',
     // alias utili (se nel file compaiono varianti)
     'hellas verona': 'verona.svg',
     'internazionale': 'inter.svg',
