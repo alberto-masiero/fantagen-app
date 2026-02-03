@@ -6,7 +6,9 @@
         <div class="h1">Seleziona la rosa</div>
         <div class="h2">Scegli 25 giocatori • equilibrio per ruoli</div>
       </div>
-
+ <ion-button size="small" fill="outline" color="warning" (click)="randomSquad()">
+      Random Test
+    </ion-button>
       <ion-button class="btn-ghost" fill="clear" size="small" (click)="reset()">
         Reset
       </ion-button>
@@ -41,19 +43,29 @@
     </div>
 
     <!-- Search -->
-    <div class="hero-search">
-      <ion-icon name="search-outline" class="search-ico"></ion-icon>
-      <input
-        class="search-input"
-        type="text"
-        inputmode="search"
-        placeholder="Cerca per nome o squadra…"
-        (input)="onSearch($event)"
-      />
-      <button class="search-clear" type="button" (click)="onSearch({ detail: { value: '' } })" aria-label="Clear">
-        ✕
-      </button>
-    </div>
+   <div class="hero-search">
+  <ion-icon name="search-outline" class="search-ico"></ion-icon>
+
+  <input
+    class="search-input"
+    type="text"
+    inputmode="search"
+    placeholder="Cerca per nome o squadra…"
+    [value]="q()"
+    (input)="onSearch($event)"
+  />
+
+  <button
+    *ngIf="q()"
+    class="search-clear"
+    type="button"
+    (click)="clearSearch()"
+    aria-label="Clear"
+  >
+    ✕
+  </button>
+</div>
+
 
     <!-- Role chips -->
     <div class="hero-chips">

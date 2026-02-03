@@ -81,15 +81,14 @@ export class SelectPage implements OnInit {
   }
 
   /** debounce 150ms: evita filtraggio ad ogni tasto */
-  onSearch(ev: any) {
-    const raw = (ev?.detail?.value ?? '').toString();
-    this.qDraft = raw.toLowerCase();
+onSearch(ev: any) {
+  const v =
+    ev?.detail?.value ??                            // ion-searchbar / ionInput
+    (ev?.target as HTMLInputElement | null)?.value  // input nativo
+    ?? '';
 
-    if (this.qTimer) clearTimeout(this.qTimer);
-    this.qTimer = setTimeout(() => {
-      this.q.set(this.qDraft);
-    }, 150);
-  }
+  this.q.set(v.toString());
+}
 
   onRoleChange(ev: any) {
     const value = ev?.detail?.value;
@@ -125,6 +124,10 @@ export class SelectPage implements OnInit {
   reset() {
     this.squad.clear();
   }
+
+  clearSearch() {
+  this.q.set('');
+}
 
   async randomSquad() {
     const all = this.players();
