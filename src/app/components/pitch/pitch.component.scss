@@ -737,3 +737,135 @@ ion-page, ion-router-outlet, .ion-page{
   background: linear-gradient(90deg, rgba(120,255,170,.95), rgba(120,180,255,.95));
   box-shadow: 0 0 10px rgba(120,255,170,.22);
 }
+
+/* ===== PLAYER BADGE compact (logo + nome + trend / MV / Tit) ===== */
+
+/* =========================
+   BADGE COMPACT v2 (mobile)
+   incolla in fondo
+   ========================= */
+
+.spot{
+  /* badge più piccoli e tutti uguali */
+  width: 28%;
+  max-width: 155px;
+}
+
+/* card più piccola */
+.badge-card.compact{
+  padding: 6px 6px 6px;
+  border-radius: 12px;
+  box-shadow: 0 10px 16px rgba(0,0,0,.20);
+}
+
+/* righe più strette */
+.row1{ gap: 6px; }
+.row2{ margin-top: 5px; }
+.row3{ margin-top: 5px; gap: 4px; }
+
+/* logo mini più piccolo ma leggibile */
+.logo-mini{
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+}
+.logo-mini img{ width: 13px; height: 13px; }
+.logo-mini span{ font-size: 7px; }
+
+/* nome: un pelo più piccolo + line-height */
+.name-inline{
+  font-size: 11px;
+  line-height: 1.05;
+}
+
+/* trend più compatto */
+.trend-inline{
+  width: 20px;
+  height: 16px;
+  font-size: 11px;
+}
+
+/* MV pill più compatta */
+.mv-pill{
+  height: 16px;
+  padding: 0 7px;
+  font-size: 9px;
+}
+
+/* tit row più compatta */
+.tit-row{
+  font-size: 9px;
+}
+
+/* barra più sottile e “pulita” */
+.tit-bar{
+  height: 6px;
+  border-radius: 999px;
+}
+.tit-fill{
+  border-radius: 999px;
+}
+
+/* flag più piccola */
+.flag{
+  height: 20px;
+  border-radius: 11px;
+  font-size: 10px;
+}
+
+/* =========================
+   Allineamento "perfetto"
+   ========================= */
+
+/* blocca variazioni di altezza tra badge con/senza Tit:
+   riserva spazio fisso per la riga 3 (bar/flag) */
+.row3{
+  min-height: 28px; /* abbastanza per bar + tit-row */
+}
+
+/* rende la row1 sempre della stessa altezza */
+.row1{
+  min-height: 18px;
+}
+
+/* =========================
+   telefoni piccoli
+   ========================= */
+@media (max-width: 360px){
+  .spot{ width: 30%; max-width: 145px; }
+  .badge-card.compact{ padding: 6px; }
+  .name-inline{ font-size: 10.5px; }
+}
+
+/* =========================
+   tablet/desktop: lascia più aria
+   ========================= */
+@media (min-width: 768px){
+  .spot{ width: 26%; max-width: 170px; }
+  .badge-card.compact{ padding: 7px 7px 7px; }
+  .name-inline{ font-size: 12px; }
+}
+
+/* FIX: trend sempre sulla stessa riga */
+.row1{
+  display: flex;
+  flex-wrap: nowrap;     /* 🔒 mai a capo */
+  align-items: center;
+  min-width: 0;
+}
+
+.logo-mini{ flex: 0 0 auto; }
+
+.name-inline{
+  flex: 1 1 auto;        /* prende lo spazio restante */
+  min-width: 0;          /* necessario per ellissi in flex */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trend-inline{
+  flex: 0 0 auto;        /* non si restringe e non va giù */
+  white-space: nowrap;
+  line-height: 1;
+}
