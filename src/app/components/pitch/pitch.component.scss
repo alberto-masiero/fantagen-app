@@ -1,70 +1,73 @@
+/* =========================
+   PITCH BASE
+========================= */
+
+.pitch-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
 .pitch{
   position:relative;
-  max-width:100%;
   width:560px;
+  max-width:100%;
   aspect-ratio:2/3;
-  margin:0 auto;
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 30px rgba(0,0,0,.18);
 
   background:
+    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.18), transparent 55%),
+    radial-gradient(120% 80% at 50% 110%, rgba(0,0,0,.20), transparent 55%),
     repeating-linear-gradient(90deg,
-      rgba(255,255,255,0.00) 0%,
-      rgba(255,255,255,0.00) 6%,
-      rgba(255,255,255,0.05) 6%,
-      rgba(255,255,255,0.05) 12%
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) 6%,
+      rgba(255,255,255,.06) 6%,
+      rgba(255,255,255,.06) 12%
     ),
-    linear-gradient(180deg,#0e7a43,#0b6237);
+    linear-gradient(180deg,#0f854a,#0b5d36);
 
   border:2px solid rgba(255,255,255,.18);
 }
 
-/* overlay linee/vignetta sopra lo sfondo */
-.markings{
+/* grana leggera */
+.pitch::after{
+  content:"";
   position:absolute;
   inset:0;
+  opacity:.08;
   pointer-events:none;
-  z-index:1;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 1px, transparent 1px 4px);
+  mix-blend-mode:soft-light;
 }
 
-.markings::before{
-  content:"";
-  position:absolute;
-  inset:18px;
-  border:2px solid rgba(255,255,255,.45);
-  border-radius:14px;
-}
+/* =========================
+   LINEE CAMPO
+========================= */
 
-.markings::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: radial-gradient(circle at 50% 30%, rgba(255,255,255,.12), rgba(0,0,0,.15));
-  opacity:.35;
-}
-
-/* linee e aree (sopra overlay, sotto players) */
 .halfway,
 .center-circle,
-.center-spot,
 .penalty-area,
 .goal-area,
-.penalty-spot,
 .penalty-arc,
-.corner,
-.goal{
+.corner{
   position:absolute;
   z-index:2;
   pointer-events:none;
+  border:2px solid rgba(255,255,255,.45);
+  filter: drop-shadow(0 0 6px rgba(255,255,255,.15));
 }
 
 .halfway{
   left:18px; right:18px;
   top:50%;
   height:2px;
+  background:rgba(255,255,255,.4);
   transform:translateY(-1px);
-  background:rgba(255,255,255,.45);
+  border:none;
 }
 
 .center-circle{
@@ -73,812 +76,66 @@
   width:26%;
   aspect-ratio:1/1;
   transform:translate(-50%,-50%);
-  border:2px solid rgba(255,255,255,.45);
-  border-radius:50%;
-}
-
-.center-spot{
-  top:50%;
-  left:50%;
-  width:6px;
-  height:6px;
-  transform:translate(-50%,-50%);
-  background:rgba(255,255,255,.55);
   border-radius:50%;
 }
 
 .penalty-area{
   left:18px; right:18px;
   height:23%;
-  border:2px solid rgba(255,255,255,.45);
   border-left:none;
   border-right:none;
 }
 .penalty-area.top{ top:18px; border-top:none; }
 .penalty-area.bottom{ bottom:18px; border-bottom:none; }
 
-.goal-area{
-  left:22%; right:22%;
-  height:11%;
-  border:2px solid rgba(255,255,255,.45);
-  border-left:none;
-  border-right:none;
-}
-.goal-area.top{ top:18px; border-top:none; }
-.goal-area.bottom{ bottom:18px; border-bottom:none; }
+/* =========================
+   PORTE
+========================= */
 
-.penalty-spot{
-  left:50%;
-  width:6px;
-  height:6px;
-  transform:translateX(-50%);
-  background:rgba(255,255,255,.55);
-  border-radius:50%;
-}
-.penalty-spot.top{ top:calc(18px + 17%); }
-.penalty-spot.bottom{ bottom:calc(18px + 17%); }
-
-.penalty-arc{
-  left:50%;
-  width:22%;
-  aspect-ratio:1/1;
-  transform:translateX(-50%);
-  border:2px solid rgba(255,255,255,.45);
-  border-radius:50%;
-}
-.penalty-arc.top{
-  top:calc(18px + 23% - 11%);
-  clip-path:inset(50% 0 0 0);
-}
-.penalty-arc.bottom{
-  bottom:calc(18px + 23% - 11%);
-  clip-path:inset(0 0 50% 0);
-}
-
-.corner{
-  width:38px;
-  height:38px;
-  border:2px solid rgba(255,255,255,.45);
-  border-radius:50%;
-}
-.corner.tl{ top:18px; left:18px; clip-path:inset(50% 0 0 50%); }
-.corner.tr{ top:18px; right:18px; clip-path:inset(50% 50% 0 0); }
-.corner.bl{ bottom:18px; left:18px; clip-path:inset(0 0 50% 50%); }
-.corner.br{ bottom:18px; right:18px; clip-path:inset(0 50% 50% 0); }
-
-/* ✅ PORTE (ora funzionano perché hanno position:absolute; e z-index) */
 .goal{
+  position:absolute;
   left:34%;
   right:34%;
   height:20px;
-  border:2px solid rgba(255,255,255,.75);
-  background:rgba(255,255,255,.10);
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.10);
-}
-.goal.top{
-  top:10px;
-  border-radius:10px 10px 0 0;
-}
-.goal.bottom{
-  bottom:10px;
-  border-radius:0 0 10px 10px;
+  border-radius:10px;
+  border:2px solid rgba(255,255,255,.8);
+  background:rgba(255,255,255,.1);
+  box-shadow:0 10px 18px rgba(0,0,0,.18);
+  z-index:2;
 }
 
-/* players */
-.spot{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  width:26%;
-  max-width:140px;
-  z-index:10; /* sopra tutto il campo */
-}
+.goal.top{ top:10px; }
+.goal.bottom{ bottom:10px; }
 
-.slot{
-  width:100%;
-  padding:4px;
-  border-radius:16px;
-  transition:outline-color .12s ease, filter .12s ease, transform .12s ease;
-}
-.slot.drop-hover{
-  outline:2px dashed rgba(255,255,255,.65);
-  outline-offset:4px;
-  transform:scale(1.02);
-}
-.slot.drop-ok{
-  outline:2px dashed rgba(255,255,255,.65);
-  outline-offset:4px;
-}
-.slot.drop-bad{
-  outline:2px dashed rgba(255,120,120,.75);
-  outline-offset:4px;
-  filter:grayscale(.25) brightness(.95);
-}
-
-.player{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  user-select:none;
-  text-align:center;
-}
-.player.ghost{ opacity:.5; }
-
-.jersey{
-  position:relative;
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.28);
-  box-shadow:0 10px 18px rgba(0,0,0,.22), inset 0 0 0 2px rgba(255,255,255,.06);
-  backdrop-filter:blur(6px);
-  display:grid;
-  place-items:center;
-}
-
-.collar{
-  position:absolute;
-  top:6px;
-  left:50%;
-  width:16px;
-  height:10px;
-  transform:translateX(-50%);
-  border:2px solid rgba(255,255,255,.55);
-  border-bottom:none;
-  border-radius:0 0 10px 10px;
-  opacity:.55;
-}
-
-.logo{
-  width:26px;
-  height:26px;
-  object-fit:contain;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));
-}
-
-.num{
-  font-weight:900;
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:.3px;
-  color:rgba(255,255,255,.95);
-  text-shadow:0 2px 6px rgba(0,0,0,.45);
-  padding:0 4px;
-  line-height:1.1;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:40px;
-}
-
-.label{
-  min-width:0;
-  max-width:150px;
-  text-align:center;
-  padding:7px 10px;
-  border-radius:12px;
-  background:rgba(0,0,0,.30);
-  border:1px solid rgba(255,255,255,.22);
-  backdrop-filter:blur(6px);
-  box-shadow:0 8px 16px rgba(0,0,0,.18);
-}
-
-.pname{
-  font-weight:900;
-  font-size:13px;
-  color:#fff;
-  line-height:1.15;
-  text-shadow:0 2px 8px rgba(0,0,0,.55);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.prate{
-  margin-top:3px;
-  font-size:12px;
-  color:rgba(255,255,255,.92);
-  font-weight:800;
-  text-shadow:0 2px 8px rgba(0,0,0,.45);
-}
-
-@media (max-width:420px){
-  .pitch{ border-radius:16px; }
-  .spot{ width:24%; max-width:120px; }
-  .jersey{ width:42px; height:42px; }
-  .logo{ width:24px; height:24px; }
-  .label{ max-width:140px; padding:6px 9px; background:rgba(0,0,0,.34); }
-}
-
-/* =========================
-   SUPER REALISM UPGRADE
-   (incolla in fondo)
-   ========================= */
-
-/* luce da stadio + micro grana */
-.pitch{
-  background:
-    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.18), rgba(255,255,255,0) 55%),
-    radial-gradient(120% 80% at 50% 110%, rgba(0,0,0,.20), rgba(0,0,0,0) 55%),
-    repeating-linear-gradient(90deg,
-      rgba(255,255,255,0.00) 0%,
-      rgba(255,255,255,0.00) 6%,
-      rgba(255,255,255,0.06) 6%,
-      rgba(255,255,255,0.06) 12%
-    ),
-    linear-gradient(180deg, #0f854a, #0b5d36);
-}
-
-/* grana (noise fake) con pattern leggero */
-.pitch::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  opacity:.10;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0 1px, rgba(255,255,255,0) 1px 3px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 1px, rgba(0,0,0,0) 1px 4px);
-  mix-blend-mode: soft-light;
-}
-
-/* linee "gesso" più realistiche: leggero bleed + glow */
-.halfway,
-.center-circle,
-.penalty-area,
-.goal-area,
-.penalty-arc,
-.corner{
-  filter: drop-shadow(0 0 1px rgba(255,255,255,.25))
-          drop-shadow(0 0 6px rgba(255,255,255,.12));
-}
-
-/* centrocampo: rendi il cerchio più naturale */
-.center-circle{
-  border-color: rgba(255,255,255,.42);
-}
-.halfway{
-  background: rgba(255,255,255,.40);
-}
-
-/* vignetta più cinematografica (ma non copre i players) */
-.markings::after{
-  opacity:.32;
-  background:
-    radial-gradient(circle at 50% 20%, rgba(255,255,255,.12), rgba(0,0,0,.18)),
-    radial-gradient(circle at 50% 80%, rgba(0,0,0,.25), rgba(0,0,0,0) 55%);
-}
-
-/* =========================
-   GOALS: rete + profondità
-   ========================= */
-
-.goal{
-  border-color: rgba(255,255,255,.80);
-  background: rgba(255,255,255,.10);
-  box-shadow:
-    inset 0 0 0 2px rgba(255,255,255,.08),
-    0 10px 18px rgba(0,0,0,.18);
-}
-
-/* rete con pseudo-elemento */
 .goal::after{
   content:"";
   position:absolute;
   inset:2px;
-  border-radius: inherit;
-  opacity:.38;
+  border-radius:inherit;
+  opacity:.35;
   background:
-    repeating-linear-gradient(45deg,
-      rgba(255,255,255,.55) 0 1px,
-      rgba(255,255,255,0) 1px 6px
-    ),
-    repeating-linear-gradient(-45deg,
-      rgba(255,255,255,.55) 0 1px,
-      rgba(255,255,255,0) 1px 6px
-    );
-  mix-blend-mode: overlay;
+    repeating-linear-gradient(45deg, rgba(255,255,255,.5) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.5) 0 1px, transparent 1px 6px);
 }
 
-/* profondità: “apertura” interna */
-.goal::before{
-  content:"";
+/* =========================
+   PLAYERS
+========================= */
+
+.spot{
   position:absolute;
-  inset:-4px;
-  border-radius: inherit;
-  opacity:.55;
-  box-shadow: inset 0 -6px 12px rgba(0,0,0,.22);
-  pointer-events:none;
+  transform:translate(-50%,-50%);
+  width:28%;
+  max-width:155px;
+  z-index:10;
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.20));
 }
 
 /* =========================
-   PLAYER: ombra + glass più reale
-   ========================= */
-
-.spot{
-  filter: drop-shadow(0 10px 16px rgba(0,0,0,.20));
-}
-
-.jersey{
-  background: rgba(255,255,255,.16);
-  box-shadow:
-    0 14px 22px rgba(0,0,0,.28),
-    inset 0 0 0 2px rgba(255,255,255,.06),
-    inset 0 -10px 16px rgba(0,0,0,.12);
-}
-
-.label{
-  background: rgba(0,0,0,.34);
-  border-color: rgba(255,255,255,.24);
-  box-shadow:
-    0 12px 20px rgba(0,0,0,.22),
-    inset 0 0 0 1px rgba(255,255,255,.06);
-}
-
-.pname{
-  text-shadow:
-    0 2px 10px rgba(0,0,0,.60),
-    0 0 10px rgba(0,0,0,.22);
-}
-
-/* =========================
-   FIX DESKTOP CENTER (DEFINITIVO)
-   ========================= */
-
-/* niente doppie centrature */
-.pitch { margin: 0 auto; }
-
-/* wrapper pulito */
-.pitch-wrapper{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-/* ionic: azzera offset laterali reali */
-ion-content{
-  --padding-start: 0px;
-  --padding-end: 0px;
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-}
-
-ion-content::part(scroll){
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  width: 100% !important;
-  box-sizing: border-box;
-  overflow-x: hidden !important;
-}
-
-/* centratura matematica su desktop (non dipende dal parent) */
-@media (min-width: 768px){
-  .pitch{
-    margin: 0 !important;
-    position: relative;
-    left: 25%;
-    transform: translateX(-50%); /* SOLO questo transform */
-  }
-}
-@media (max-width: 767px){
-  .pitch{
-    left: auto;
-    transform: none;
-    margin: 0 auto;
-  }
-}
-
-/* IMPORTANTISSIMO: i players devono mantenere il loro transform */
-.spot{
-  transform: translate(-50%, -50%);
-}
-
-
-/* =========================
-   Drag states: più “wow”
-   ========================= */
-.slot.drop-hover{
-  outline: 2px dashed rgba(255,255,255,.80);
-  outline-offset: 5px;
-  transform: scale(1.03);
-  filter: drop-shadow(0 10px 14px rgba(0,0,0,.18));
-}
-
-.slot.drop-ok{
-  outline: 2px dashed rgba(120,255,170,.85);
-  outline-offset: 5px;
-}
-
-.slot.drop-bad{
-  outline: 2px dashed rgba(255,120,120,.85);
-  outline-offset: 5px;
-}
-
-.pitch-wrapper{
-  width:100%;
-  display:flex;
-  justify-content:center;
-}
-
-/* elimina eventuali padding strani da Ionic */
-ion-content{
-  --padding-start: 0px;
-  --padding-end: 0px;
-}
-
-:host {
-  display:block;
-}
-/* wrapper: centra perfettamente */
-.pitch-wrapper{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-/* dentro il wrapper la pitch NON deve usare margin auto (eviti doppie logiche) */
-.pitch{
-  margin: 0;
-}
-
-/* Ionic: azzera davvero padding/offset dello scroll interno (desktop incluso) */
-ion-content{
-  --padding-start: 0px;
-  --padding-end: 0px;
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-}
-
-/* questo è quello che spesso “sposta” di qualche px su desktop */
-ion-content::part(scroll){
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  width: 100% !important;
-  box-sizing: border-box;
-}
-
-/* se hai anche ion-page/ion-router-outlet con padding/margini strani */
-ion-page, ion-router-outlet, .ion-page{
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.pitch-3d{
-  /* niente transform qui, solo filtri/ombre */
-  filter: drop-shadow(0 14px 26px rgba(0,0,0,.18));
-}
-
-/* ===== PLAYER BADGE (mobile first) ===== */
-
-.spot{
-  width: 30%;
-  max-width: 170px;
-}
-
-/* sostituisce il vecchio layout player+label */
-.player{
-  display:block;
-  user-select:none;
-  text-align:left;
-}
+   BADGE VERTICAL
+========================= */
 
 .badge-card{
-  width:100%;
-  padding: 8px 8px 7px;
-  border-radius: 14px;
-  background: rgba(0,0,0,.34);
-  border: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 12px 20px rgba(0,0,0,.22);
-  color: #fff;
-}
-
-/* top row */
-.top{
-  display:flex;
-  align-items:center;
-  gap: 8px;
-}
-
-.name-wrap{
-  min-width: 0;
-  flex: 1 1 auto;
-}
-
-.pname{
-  font-weight: 950;
-  font-size: 12px;
-  line-height: 1.15;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-shadow: 0 2px 8px rgba(0,0,0,.55);
-}
-
-.sub{
-  margin-top: 4px;
-  display:flex;
-  align-items:center;
-  gap: 6px;
-}
-
-/* pills */
-.mv-pill,
-.trend-pill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height: 18px;
-  padding: 0 8px;
-  border-radius: 999px;
-  font-weight: 950;
-  font-size: 10px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  color: rgba(255,255,255,.92);
-  white-space: nowrap;
-}
-
-.trend-pill{
-  width: 26px;
-  padding: 0;
-  font-size: 12px;
-  line-height: 1;
-}
-
-.trend-pill[data-trend="+"]{ background: rgba(120,255,170,.18); border-color: rgba(120,255,170,.32); }
-.trend-pill[data-trend="-"]{ background: rgba(255,120,120,.18); border-color: rgba(255,120,120,.32); }
-.trend-pill[data-trend="="]{ background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.16); }
-
-/* bottom */
-.bottom{ margin-top: 7px; }
-
-.tit-row{
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-  font-size: 10px;
-  font-weight: 900;
-  color: rgba(255,255,255,.88);
-}
-
-.tit-bar{
-  margin-top: 5px;
-  height: 7px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.12);
-  overflow:hidden;
-}
-
-.tit-fill{
-  height: 100%;
-  width: 0%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(120,255,170,.95), rgba(120,180,255,.95));
-  box-shadow: 0 0 10px rgba(120,255,170,.25);
-}
-
-/* flag I / S */
-.flag{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height: 22px;
-  border-radius: 12px;
-  font-weight: 950;
-  font-size: 11px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-}
-
-.flag[data-flag="I"]{
-  background: rgba(255,120,120,.20);
-  border-color: rgba(255,120,120,.30);
-}
-.flag[data-flag="S"]{
-  background: rgba(255,210,120,.20);
-  border-color: rgba(255,210,120,.30);
-}
-
-/* jersey resta uguale (riuso le tue classi) */
-.jersey{
-  width: 40px;
-  height: 40px;
-}
-
-.logo{
-  width: 24px;
-  height: 24px;
-}
-
-/* ghost: più compatto */
-.player.ghost .badge-card{
-  opacity: .55;
-}
-.player.ghost .pname{ text-transform: uppercase; letter-spacing: .4px; }
-
-/* extra small phones */
-@media (max-width: 360px){
-  .spot{ width: 32%; }
-  .pname{ font-size: 11px; }
-  .mv-pill, .trend-pill{ font-size: 9px; height: 17px; }
-}
-
-
-/* fallback (se non prende classi) */
-.tit-fill{
-  background: rgba(255,255,255,.85);
-}
-
-/* colori in base alla % */
-.tit-fill.low{
-  background: linear-gradient(90deg, rgba(255,120,120,.95), rgba(255,210,120,.95));
-  box-shadow: 0 0 10px rgba(255,120,120,.20);
-}
-.tit-fill.mid{
-  background: linear-gradient(90deg, rgba(255,210,120,.95), rgba(120,255,170,.95));
-  box-shadow: 0 0 10px rgba(255,210,120,.20);
-}
-.tit-fill.high{
-  background: linear-gradient(90deg, rgba(120,255,170,.95), rgba(120,180,255,.95));
-  box-shadow: 0 0 10px rgba(120,255,170,.22);
-}
-
-/* ===== PLAYER BADGE compact (logo + nome + trend / MV / Tit) ===== */
-
-/* =========================
-   BADGE COMPACT v2 (mobile)
-   incolla in fondo
-   ========================= */
-
-.spot{
-  /* badge più piccoli e tutti uguali */
-  width: 28%;
-  max-width: 155px;
-}
-
-/* card più piccola */
-.badge-card.compact{
-  padding: 6px 6px 6px;
-  border-radius: 12px;
-  box-shadow: 0 10px 16px rgba(0,0,0,.20);
-}
-
-/* righe più strette */
-.row1{ gap: 6px; }
-.row2{ margin-top: 5px; }
-.row3{ margin-top: 5px; gap: 4px; }
-
-/* logo mini più piccolo ma leggibile */
-.logo-mini{
-  width: 16px;
-  height: 16px;
-  border-radius: 6px;
-}
-.logo-mini img{ width: 13px; height: 13px; }
-.logo-mini span{ font-size: 7px; }
-
-/* nome: un pelo più piccolo + line-height */
-.name-inline{
-  font-size: 11px;
-  line-height: 1.05;
-}
-
-/* trend più compatto */
-.trend-inline{
-  width: 20px;
-  height: 16px;
-  font-size: 11px;
-}
-
-/* MV pill più compatta */
-.mv-pill{
-  height: 16px;
-  padding: 0 7px;
-  font-size: 9px;
-}
-
-/* tit row più compatta */
-.tit-row{
-  font-size: 9px;
-}
-
-/* barra più sottile e “pulita” */
-.tit-bar{
-  height: 6px;
-  border-radius: 999px;
-}
-.tit-fill{
-  border-radius: 999px;
-}
-
-/* flag più piccola */
-.flag{
-  height: 20px;
-  border-radius: 11px;
-  font-size: 10px;
-}
-
-/* =========================
-   Allineamento "perfetto"
-   ========================= */
-
-/* blocca variazioni di altezza tra badge con/senza Tit:
-   riserva spazio fisso per la riga 3 (bar/flag) */
-.row3{
-  min-height: 28px; /* abbastanza per bar + tit-row */
-}
-
-/* rende la row1 sempre della stessa altezza */
-.row1{
-  min-height: 18px;
-}
-
-/* =========================
-   telefoni piccoli
-   ========================= */
-@media (max-width: 360px){
-  .spot{ width: 30%; max-width: 145px; }
-  .badge-card.compact{ padding: 6px; }
-  .name-inline{ font-size: 10.5px; }
-}
-
-/* =========================
-   tablet/desktop: lascia più aria
-   ========================= */
-@media (min-width: 768px){
-  .spot{ width: 26%; max-width: 170px; }
-  .badge-card.compact{ padding: 7px 7px 7px; }
-  .name-inline{ font-size: 12px; }
-}
-
-/* FIX: trend sempre sulla stessa riga */
-.row1{
-  display: flex;
-  flex-wrap: nowrap;     /* 🔒 mai a capo */
-  align-items: center;
-  min-width: 0;
-}
-
-.logo-mini{ flex: 0 0 auto; }
-
-.name-inline{
-  flex: 1 1 auto;        /* prende lo spazio restante */
-  min-width: 0;          /* necessario per ellissi in flex */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.trend-inline{
-  flex: 0 0 auto;        /* non si restringe e non va giù */
-  white-space: nowrap;
-  line-height: 1;
-}
-
-@media (max-width: 520px){
-  .trend-inline{ width: 18px; }
-}
-
-/* =========================
-   BADGE VERTICAL MOBILE
-   ========================= */
-
-.badge-card.vertical{
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -887,21 +144,13 @@ ion-page, ion-router-outlet, .ion-page{
   border-radius:14px;
   background:rgba(0,0,0,.35);
   border:1px solid rgba(255,255,255,.15);
-  backdrop-filter: blur(6px);
+  backdrop-filter:blur(6px);
 }
 
-/* ===== RIGA 1 LOGO ===== */
-
-.row-logo{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
+/* LOGO */
 .logo-mini{
   width:20px;
   height:20px;
-  border-radius:6px;
   display:grid;
   place-items:center;
 }
@@ -912,18 +161,11 @@ ion-page, ion-router-outlet, .ion-page{
   object-fit:contain;
 }
 
-.logo-mini span{
-  font-size:9px;
-  font-weight:900;
-  color:#fff;
-}
-
-/* ===== RIGA 2 MV + TREND ===== */
-
+/* MV + TREND */
 .row-mv{
   display:flex;
-  align-items:center;
   gap:6px;
+  align-items:center;
 }
 
 .mv-pill{
@@ -944,29 +186,18 @@ ion-page, ion-router-outlet, .ion-page{
 .trend-inline.down{ color:#ff5b5b; }
 .trend-inline.eq{ color:#ccc; }
 
-/* ===== RIGA 3 NOME ===== */
-
-.row-name{
-  text-align:center;
-  width:100%;
-}
-
+/* NOME */
 .name-inline{
   font-size:11px;
   font-weight:900;
-  line-height:1.05;
   color:#fff;
+  text-align:center;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-/* ===== RIGA 4 PROGRESS ===== */
-
-.row-progress{
-  width:100%;
-}
-
+/* TITOLARITÀ */
 .tit-bar{
   width:100%;
   height:6px;
@@ -984,8 +215,7 @@ ion-page, ion-router-outlet, .ion-page{
 .tit-fill.mid{ background:#ffb84e; }
 .tit-fill.high{ background:#4eff8a; }
 
-/* ===== FLAG ===== */
-
+/* FLAG */
 .flag{
   width:100%;
   font-size:9px;
@@ -1003,4 +233,690 @@ ion-page, ion-router-outlet, .ion-page{
 .flag.sus{
   background:rgba(255,180,0,.18);
   color:#ffc85a;
+}
+
+/* =========================
+   IONIC FIX
+========================= */
+
+ion-content{
+  --padding-start:0;
+  --padding-end:0;
+  --padding-top:0;
+  --padding-bottom:0;
+}
+/* =========================
+   TITOLARITÀ PROGRESS BAR
+========================= */
+
+.row-progress{
+  width:100%;
+  margin-top:4px;
+}
+
+.tit-bar{
+  width:100%;
+  height:6px;
+  background:rgba(255,255,255,.12);
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.tit-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  transition:width .35s ease;
+}
+
+/* livelli colore */
+.tit-fill.low{
+  background:linear-gradient(90deg,#ff5b5b,#ffb84e);
+}
+
+.tit-fill.mid{
+  background:linear-gradient(90deg,#ffb84e,#4eff8a);
+}
+
+.tit-fill.high{
+  background:linear-gradient(90deg,#4eff8a,#4ecbff);
+}
+
+
+/* =========================
+   FIFA / EA SPORTS BROADCAST
+   (vertical badge)
+========================= */
+
+:root{
+  --fx-white: rgba(255,255,255,.92);
+  --fx-border: rgba(255,255,255,.14);
+  --fx-glass: rgba(8,10,14,.42);
+  --fx-glass2: rgba(12,14,18,.30);
+  --fx-shadow: rgba(0,0,0,.35);
+
+  /* accent default (puoi settarlo per team) */
+  --accentA: 120, 255, 170; /* greenish */
+  --accentB: 78, 203, 255;  /* cyan */
+}
+
+/* CARD */
+.badge-card.vertical{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(120% 100% at 50% -10%, rgba(var(--accentB),.20), transparent 55%),
+    radial-gradient(120% 100% at 50% 120%, rgba(0,0,0,.50), transparent 60%),
+    linear-gradient(180deg, var(--fx-glass), var(--fx-glass2));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 14px 24px rgba(0,0,0,.30),
+    inset 0 1px 0 rgba(255,255,255,.08);
+  backdrop-filter: blur(10px) saturate(1.2);
+}
+
+/* bordo “TV” con glow leggero */
+.badge-card.vertical::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1px;
+  background:
+    linear-gradient(135deg,
+      rgba(var(--accentA),.55),
+      rgba(255,255,255,.10),
+      rgba(var(--accentB),.55)
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity:.45;
+  pointer-events:none;
+}
+
+/* highlight diagonale tipo broadcast */
+.badge-card.vertical::after{
+  content:"";
+  position:absolute;
+  inset:-40% -60%;
+  background: linear-gradient(115deg,
+    transparent 40%,
+    rgba(255,255,255,.14) 52%,
+    transparent 64%
+  );
+  transform: rotate(6deg);
+  opacity:.45;
+  pointer-events:none;
+}
+
+/* LOGO BOX più “stampato” */
+.logo-mini{
+  width:22px;
+  height:22px;
+  border-radius:7px;
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+}
+.logo-mini img{
+  width:18px;
+  height:18px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.45));
+}
+
+/* MV pill style broadcast */
+.mv-pill{
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,.14),
+      rgba(255,255,255,.06)
+    );
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10);
+  letter-spacing:.25px;
+}
+
+/* TREND chip “scoreboard” */
+.trend-inline{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:18px;
+  height:18px;
+  padding:0 6px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  text-shadow: 0 2px 8px rgba(0,0,0,.55);
+}
+.trend-inline.up{
+  color: #4eff8a !important;
+  background: rgba(78,255,138,.18) !important;
+  border-color: rgba(78,255,138,.30) !important;
+}
+
+.trend-inline.down{
+  color: rgba(255,120,120,.98);
+  background: rgba(255,120,120,.14);
+  border-color: rgba(255,120,120,.22);
+}
+.trend-inline.eq{
+  color: rgba(255,255,255,.82);
+}
+
+/* NOME: più “TV lower-third” */
+.name-inline{
+  font-size:11.5px;
+  font-weight:950;
+  letter-spacing:.25px;
+  text-transform: uppercase;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.65),
+    0 0 16px rgba(0,0,0,.25);
+}
+
+/* PROGRESS BAR: broadcast + shine */
+.row-progress{ width:100%; margin-top:4px; }
+
+.tit-bar{
+  position:relative;
+  width:100%;
+  height:7px;
+  border-radius:999px;
+  background: rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  overflow:hidden;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.22),
+    inset 0 2px 10px rgba(0,0,0,.22);
+}
+
+.tit-fill{
+  position:relative;
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  transition: width .35s ease;
+  background: linear-gradient(90deg,
+    rgba(var(--accentA),.95),
+    rgba(var(--accentB),.95)
+  );
+  box-shadow: 0 0 14px rgba(var(--accentB),.18);
+}
+
+/* shine animata sopra la fill */
+.tit-fill::after{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-30%;
+  width:40%;
+  height:180%;
+  transform: rotate(18deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.40), transparent);
+  opacity:.55;
+  animation: titShine 1.8s ease-in-out infinite;
+}
+@keyframes titShine{
+  0%   { transform: translateX(-40%) rotate(18deg); opacity:.15; }
+  40%  { opacity:.55; }
+  100% { transform: translateX(360%) rotate(18deg); opacity:.10; }
+}
+
+/* livelli colore (se vuoi mantenere low/mid/high) */
+.tit-fill.low{
+  background: linear-gradient(90deg, rgba(255,120,120,.95), rgba(255,200,120,.95));
+}
+.tit-fill.mid{
+  background: linear-gradient(90deg, rgba(255,200,120,.95), rgba(var(--accentA),.95));
+}
+.tit-fill.high{
+  background: linear-gradient(90deg, rgba(var(--accentA),.95), rgba(var(--accentB),.95));
+}
+
+/* FLAG: stile “warning banner” */
+.flag{
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  text-transform: uppercase;
+  letter-spacing:.35px;
+}
+.flag.inj{
+  background: rgba(255,80,80,.16);
+  border-color: rgba(255,80,80,.22);
+  color: rgba(255,170,170,.98);
+}
+.flag.sus{
+  background: rgba(255,180,0,.16);
+  border-color: rgba(255,180,0,.22);
+  color: rgba(255,220,150,.98);
+}
+
+/* micro “pop” quando droppi (riusa le tue classi slot) */
+.slot.drop-ok .badge-card.vertical{
+  transform: translateZ(0) scale(1.02);
+  box-shadow:
+    0 18px 28px rgba(0,0,0,.34),
+    0 0 0 1px rgba(var(--accentA),.18);
+}
+.slot.drop-bad .badge-card.vertical{
+  filter: grayscale(.25) brightness(.95);
+}
+
+/* PROGRESS: hard reset (non può sparire) */
+.row-progress{ width:100%; margin-top:4px; }
+
+.tit-bar{
+  position:relative;
+  width:100%;
+  height:7px;
+  border-radius:999px;
+  overflow:hidden;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.14);
+  box-sizing:border-box;
+}
+
+.tit-fill{
+  position:absolute;      /* 🔥 evita problemi di layout */
+  left:0; top:0; bottom:0;
+  width:0%;
+  display:block;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(120,255,170,.95), rgba(78,203,255,.95));
+  min-width:2px;          /* 🔥 anche 1% si vede */
+  will-change: width;
+  transition: width .35s ease;
+}
+
+/* livelli */
+.tit-fill.low{
+  background: linear-gradient(90deg, rgba(255,120,120,.95), rgba(255,200,120,.95));
+}
+.tit-fill.mid{
+  background: linear-gradient(90deg, rgba(255,200,120,.95), rgba(120,255,170,.95));
+}
+.tit-fill.high{
+  background: linear-gradient(90deg, rgba(120,255,170,.95), rgba(78,203,255,.95));
+}
+
+/* =========================================
+   PITCH SUPER REALISTIC (per il tuo HTML)
+   wrapper: .pitch-wrapper
+   campo:   .pitch.pitch-3d
+   overlay: .markings
+   ========================================= */
+
+/* wrapper non deve aggiungere offset */
+.pitch-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+/* campo */
+.pitch.pitch-3d{
+  position:relative;
+  width:560px;
+  max-width:100%;
+  aspect-ratio:2/3;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 14px 34px rgba(0,0,0,.22);
+  border:2px solid rgba(255,255,255,.16);
+
+  /* ERBA + LUCI + USURA + STRISCE */
+  background:
+    /* luci stadio */
+    radial-gradient(120% 80% at 50% -12%, rgba(255,255,255,.22), transparent 58%),
+    radial-gradient(120% 90% at 50% 115%, rgba(0,0,0,.34), transparent 58%),
+
+    /* usura centro/aree */
+    radial-gradient(38% 22% at 50% 50%, rgba(255,255,255,.08), transparent 62%),
+    radial-gradient(46% 26% at 50% 17%, rgba(255,255,255,.06), transparent 64%),
+    radial-gradient(46% 26% at 50% 83%, rgba(255,255,255,.06), transparent 64%),
+
+    /* stripes mowing più morbide */
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) 5.6%,
+      rgba(255,255,255,.055) 5.6%,
+      rgba(255,255,255,.055) 11.2%
+    ),
+
+    /* base green */
+    linear-gradient(180deg, #118f50, #0a5a34);
+}
+
+/* grana + micro texture (sopra lo sfondo, sotto overlay/linee) */
+.pitch.pitch-3d::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.12;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 1px, transparent 1px 5px);
+  mix-blend-mode:soft-light;
+}
+
+/* =========================
+   OVERLAY: bordo + vignetta
+   (il tuo .markings è già in HTML)
+========================= */
+.markings{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1; /* sopra erba, sotto linee */
+}
+
+.markings::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:2px solid rgba(255,255,255,.44);
+  border-radius:14px;
+  /* leggero “bleed” per gesso */
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 0 10px rgba(255,255,255,.06);
+}
+
+.markings::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.30;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,.12), rgba(0,0,0,.20)),
+    radial-gradient(circle at 50% 85%, rgba(0,0,0,.30), transparent 55%);
+}
+
+/* =========================
+   LINEE CAMPO (gesso realistico)
+========================= */
+
+.halfway,
+.center-circle,
+.center-spot,
+.penalty-area,
+.goal-area,
+.penalty-spot,
+.penalty-arc,
+.corner,
+.goal{
+  position:absolute;
+  pointer-events:none;
+}
+
+/* linee sopra overlay */
+.halfway,
+.center-circle,
+.center-spot,
+.penalty-area,
+.goal-area,
+.penalty-spot,
+.penalty-arc,
+.corner,
+.goal{
+  z-index:2;
+}
+
+/* gesso: glow/bleed */
+.halfway,
+.center-circle,
+.penalty-area,
+.goal-area,
+.penalty-arc,
+.corner{
+  filter:
+    drop-shadow(0 0 1px rgba(255,255,255,.28))
+    drop-shadow(0 0 10px rgba(255,255,255,.10));
+}
+
+/* metà campo */
+.halfway{
+  left:18px; right:18px;
+  top:50%;
+  height:2px;
+  transform:translateY(-1px);
+  background:rgba(255,255,255,.44);
+}
+
+/* cerchio centro */
+.center-circle{
+  top:50%;
+  left:50%;
+  width:26%;
+  aspect-ratio:1/1;
+  transform:translate(-50%,-50%);
+  border:2px solid rgba(255,255,255,.44);
+  border-radius:50%;
+}
+
+/* spot centro */
+.center-spot{
+  top:50%;
+  left:50%;
+  width:6px;
+  height:6px;
+  transform:translate(-50%,-50%);
+  background:rgba(255,255,255,.55);
+  border-radius:50%;
+}
+
+/* area rigore */
+.penalty-area{
+  left:18px; right:18px;
+  height:23%;
+  border:2px solid rgba(255,255,255,.44);
+  border-left:none;
+  border-right:none;
+}
+.penalty-area.top{ top:18px; border-top:none; }
+.penalty-area.bottom{ bottom:18px; border-bottom:none; }
+
+/* area piccola */
+.goal-area{
+  left:22%; right:22%;
+  height:11%;
+  border:2px solid rgba(255,255,255,.44);
+  border-left:none;
+  border-right:none;
+}
+.goal-area.top{ top:18px; border-top:none; }
+.goal-area.bottom{ bottom:18px; border-bottom:none; }
+
+/* dischetto rigore */
+.penalty-spot{
+  left:50%;
+  width:6px;
+  height:6px;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.55);
+  border-radius:50%;
+}
+.penalty-spot.top{ top:calc(18px + 17%); }
+.penalty-spot.bottom{ bottom:calc(18px + 17%); }
+
+/* arco rigore */
+.penalty-arc{
+  left:50%;
+  width:22%;
+  aspect-ratio:1/1;
+  transform:translateX(-50%);
+  border:2px solid rgba(255,255,255,.44);
+  border-radius:50%;
+}
+.penalty-arc.top{
+  top:calc(18px + 23% - 11%);
+  clip-path:inset(50% 0 0 0);
+}
+.penalty-arc.bottom{
+  bottom:calc(18px + 23% - 11%);
+  clip-path:inset(0 0 50% 0);
+}
+
+/* angoli */
+.corner{
+  width:38px;
+  height:38px;
+  border:2px solid rgba(255,255,255,.44);
+  border-radius:50%;
+}
+.corner.tl{ top:18px; left:18px; clip-path:inset(50% 0 0 50%); }
+.corner.tr{ top:18px; right:18px; clip-path:inset(50% 50% 0 0); }
+.corner.bl{ bottom:18px; left:18px; clip-path:inset(0 0 50% 50%); }
+.corner.br{ bottom:18px; right:18px; clip-path:inset(0 50% 50% 0); }
+
+/* =========================
+   PORTE: rete + profondità
+========================= */
+
+.goal{
+  left:34%;
+  right:34%;
+  height:20px;
+  border:2px solid rgba(255,255,255,.78);
+  background:rgba(255,255,255,.10);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.06),
+    0 10px 18px rgba(0,0,0,.18);
+}
+
+.goal.top{
+  top:10px;
+  border-radius:10px 10px 0 0;
+}
+.goal.bottom{
+  bottom:10px;
+  border-radius:0 0 10px 10px;
+}
+
+/* rete */
+.goal::after{
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius:inherit;
+  opacity:.35;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.52) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.52) 0 1px, transparent 1px 6px);
+  mix-blend-mode:overlay;
+}
+
+/* profondità */
+.goal::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:inherit;
+  opacity:.55;
+  box-shadow: inset 0 -7px 14px rgba(0,0,0,.22);
+  pointer-events:none;
+}
+
+/* =========================
+   PLAYERS sopra tutto
+========================= */
+.spot{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  z-index:10;
+}
+
+.name-inline{
+  font-size:10px;
+  line-height:1.02;
+  letter-spacing:.12px;
+}
+@media (max-width:360px){
+  .name-inline{ font-size:9.5px; }
+}
+@media (min-width:768px){
+  .name-inline{ font-size:10.5px; }
+}
+
+
+/* =========================================
+   EXTRA REALISM: diagonal turf + micro-bump
+   + subtle camera perspective
+   (SAFE: non muove players/linee)
+   ========================================= */
+
+/* layer extra sotto overlay/linee/players */
+.pitch.pitch-3d::before{
+  content:"";
+  position:absolute;
+  inset:-6%;                  /* un po’ più grande per non tagliare con rotazioni */
+  z-index:0;                  /* sotto markings(z=1) e linee(z=2) */
+  pointer-events:none;
+
+  /* TEXTURE: fibre diagonali + micro variazioni */
+  background:
+    /* fibre prato diagonali (molto sottili) */
+    repeating-linear-gradient(135deg,
+      rgba(255,255,255,.035) 0 1px,
+      rgba(255,255,255,0) 1px 6px
+    ),
+    /* seconda trama incrociata (più soft) */
+    repeating-linear-gradient(45deg,
+      rgba(0,0,0,.030) 0 1px,
+      rgba(0,0,0,0) 1px 7px
+    ),
+    /* “mowing” addizionale (più profondo) */
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) 6%,
+      rgba(255,255,255,.050) 6%,
+      rgba(255,255,255,.050) 12%
+    );
+
+  mix-blend-mode: soft-light;
+  opacity:.75;
+
+  /* PROSPETTIVA CAMERA (SOFT) */
+  transform-origin: 50% 50%;
+  transform:
+    perspective(900px)
+    rotateX(2.2deg)           /* leggerissima “camera tilt” */
+    rotateZ(-0.6deg)          /* microscopica rotazione per effetto TV */
+    scale(1.02);
+  filter: blur(.15px);        /* anti-alias micro */
+}
+
+/* assicurati che la tua grana non finisca sopra tutto */
+.pitch.pitch-3d::after{
+  z-index:0;
+  opacity:.10;                /* un filo meno forte: ora c’è anche ::before */
+}
+
+/* opzionale: un pelo più “stadium lights” */
+.pitch.pitch-3d{
+  box-shadow: 0 18px 44px rgba(0,0,0,.26);
+}
+
+/* linee ancora più “gesso” */
+.halfway,
+.center-circle,
+.penalty-area,
+.goal-area,
+.penalty-arc,
+.corner{
+  filter:
+    drop-shadow(0 0 1px rgba(255,255,255,.30))
+    drop-shadow(0 0 12px rgba(255,255,255,.10));
+}
+
+/* overlay non deve coprire troppo */
+.markings::after{
+  opacity:.28;
 }

@@ -53,7 +53,7 @@
 
     <!-- 2️⃣ MV + TREND -->
     <div class="row-mv">
-      <div class="mv-pill">MV {{ p.rating | number:'1.2-2' }}</div>
+      <div class="mv-pill">{{ p.rating | number:'1.2-2' }}</div>
 
       <div class="trend-inline"
            [class.up]="p.trend === '+'"
