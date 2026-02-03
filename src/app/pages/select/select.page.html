@@ -36,7 +36,7 @@
   </div>
 
   <ion-list *ngIf="!loading(); else skel">
-    <ion-item button detail="false" *ngFor="let p of filtered()" (click)="toggle(p)">
+    <ion-item button detail="false" *ngFor="let p of filtered(); trackBy: trackById" (click)="toggle(p)">
       <ion-label>
         <div class="row1">
           <b>{{ p.name }}</b>

@@ -1,7 +1,7 @@
 .pitch{
   position:relative;
-  width:100%;
-  max-width:560px;
+  max-width:100%;
+  width:560px;
   aspect-ratio:2/3;
   margin:0 auto;
   border-radius:18px;
@@ -425,19 +425,62 @@
 }
 
 /* =========================
-   Subtle pitch perspective (molto delicata)
+   FIX DESKTOP CENTER (DEFINITIVO)
    ========================= */
-.pitch{
-  transform: translateZ(0);
+
+/* niente doppie centrature */
+.pitch { margin: 0 auto; }
+
+/* wrapper pulito */
+.pitch-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-@media (min-width: 520px){
+
+/* ionic: azzera offset laterali reali */
+ion-content{
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+}
+
+ion-content::part(scroll){
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  overflow-x: hidden !important;
+}
+
+/* centratura matematica su desktop (non dipende dal parent) */
+@media (min-width: 768px){
   .pitch{
-    perspective: 900px;
-  }
-  .pitch > *{
-    transform: translateZ(0);
+    margin: 0 !important;
+    position: relative;
+    left: 25%;
+    transform: translateX(-50%); /* SOLO questo transform */
   }
 }
+@media (max-width: 767px){
+  .pitch{
+    left: auto;
+    transform: none;
+    margin: 0 auto;
+  }
+}
+
+/* IMPORTANTISSIMO: i players devono mantenere il loro transform */
+.spot{
+  transform: translate(-50%, -50%);
+}
+
 
 /* =========================
    Drag states: più “wow”
@@ -457,4 +500,63 @@
 .slot.drop-bad{
   outline: 2px dashed rgba(255,120,120,.85);
   outline-offset: 5px;
+}
+
+.pitch-wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
+/* elimina eventuali padding strani da Ionic */
+ion-content{
+  --padding-start: 0px;
+  --padding-end: 0px;
+}
+
+:host {
+  display:block;
+}
+/* wrapper: centra perfettamente */
+.pitch-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* dentro il wrapper la pitch NON deve usare margin auto (eviti doppie logiche) */
+.pitch{
+  margin: 0;
+}
+
+/* Ionic: azzera davvero padding/offset dello scroll interno (desktop incluso) */
+ion-content{
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+}
+
+/* questo è quello che spesso “sposta” di qualche px su desktop */
+ion-content::part(scroll){
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* se hai anche ion-page/ion-router-outlet con padding/margini strani */
+ion-page, ion-router-outlet, .ion-page{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.pitch-3d{
+  /* niente transform qui, solo filtri/ombre */
+  filter: drop-shadow(0 14px 26px rgba(0,0,0,.18));
 }
