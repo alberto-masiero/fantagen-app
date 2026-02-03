@@ -1,58 +1,138 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Seleziona Rosa (25)</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="reset()">Reset</ion-button>
-      <ion-button expand="block" fill="outline" (click)="randomSquad()">
-  🎲 Random 25 (test)
-</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="select-content">
+  <!-- HERO / HEADER -->
+  <div class="select-hero">
+    <div class="hero-top">
+      <div class="hero-title">
+        <div class="h1">Seleziona la rosa</div>
+        <div class="h2">Scegli 25 giocatori • equilibrio per ruoli</div>
+      </div>
 
-<ion-content class="ion-padding">
-  <div class="topbar">
-    <ion-searchbar placeholder="Cerca nome o squadra" (ionInput)="onSearch($event)"></ion-searchbar>
-
-    <ion-segment value="ALL" (ionChange)="onRoleChange($event)">
-      <ion-segment-button value="ALL"><ion-label>Tutti</ion-label></ion-segment-button>
-      <ion-segment-button value="GK"><ion-label>POR</ion-label></ion-segment-button>
-      <ion-segment-button value="DEF"><ion-label>DIF</ion-label></ion-segment-button>
-      <ion-segment-button value="MID"><ion-label>CEN</ion-label></ion-segment-button>
-      <ion-segment-button value="FWD"><ion-label>ATT</ion-label></ion-segment-button>
-    </ion-segment>
-
-    <div class="counters">
-      <div class="pill">Tot: <b>{{ total() }}/25</b></div>
-      <div class="pill">POR <b>{{ counts().GK }}/3</b></div>
-      <div class="pill">DIF <b>{{ counts().DEF }}/8</b></div>
-      <div class="pill">CEN <b>{{ counts().MID }}/8</b></div>
-      <div class="pill">ATT <b>{{ counts().FWD }}/6</b></div>
+      <ion-button class="btn-ghost" fill="clear" size="small" (click)="reset()">
+        Reset
+      </ion-button>
     </div>
 
-    <ion-button expand="block" [disabled]="!complete()" (click)="goFormation()">
-      Vai a Formazione
-    </ion-button>
+    <!-- Progress / counters -->
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-label">Totale</div>
+        <div class="stat-value">{{ total() }}/25</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Portieri</div>
+        <div class="stat-value">{{ counts().GK }}/3</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Difensori</div>
+        <div class="stat-value">{{ counts().DEF }}/8</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Centroc.</div>
+        <div class="stat-value">{{ counts().MID }}/8</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Attacc.</div>
+        <div class="stat-value">{{ counts().FWD }}/6</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="hero-search">
+      <ion-icon name="search-outline" class="search-ico"></ion-icon>
+      <input
+        class="search-input"
+        type="text"
+        inputmode="search"
+        placeholder="Cerca per nome o squadra…"
+        (input)="onSearch($event)"
+      />
+      <button class="search-clear" type="button" (click)="onSearch({ detail: { value: '' } })" aria-label="Clear">
+        ✕
+      </button>
+    </div>
+
+    <!-- Role chips -->
+    <div class="hero-chips">
+      <button class="chip" [class.active]="roleFilter() === 'ALL'" (click)="roleFilter.set('ALL')">Tutti</button>
+      <button class="chip" [class.active]="roleFilter() === 'GK'" (click)="roleFilter.set('GK')">POR</button>
+      <button class="chip" [class.active]="roleFilter() === 'DEF'" (click)="roleFilter.set('DEF')">DIF</button>
+      <button class="chip" [class.active]="roleFilter() === 'MID'" (click)="roleFilter.set('MID')">CEN</button>
+      <button class="chip" [class.active]="roleFilter() === 'FWD'" (click)="roleFilter.set('FWD')">ATT</button>
+    </div>
   </div>
 
-  <ion-list *ngIf="!loading(); else skel">
-    <ion-item button detail="false" *ngFor="let p of filtered(); trackBy: trackById" (click)="toggle(p)">
-      <ion-label>
-        <div class="row1">
-          <b>{{ p.name }}</b>
-          <span class="tag">{{ p.role }}</span>
-          <span class="rating">{{ p.rating }}</span>
-        </div>
-        <div class="row2">{{ p.team }}</div>
-      </ion-label>
+  <!-- LIST -->
+  <div class="select-list">
+    <div class="list-meta">
+      <div class="meta-left">
+        <span class="pill">{{ filtered().length }}</span>
+        <span class="meta-txt">giocatori</span>
+      </div>
 
-      <ion-checkbox slot="end" [checked]="isSelected(p)"></ion-checkbox>
-    </ion-item>
-  </ion-list>
+      <ion-button class="btn-ghost" fill="clear" size="small" (click)="randomSquad()">
+        Random
+      </ion-button>
+    </div>
 
-  <ng-template #skel>
-    <ion-skeleton-text animated style="height: 18px; width: 60%"></ion-skeleton-text>
-    <ion-skeleton-text animated style="height: 18px; width: 85%"></ion-skeleton-text>
-    <ion-skeleton-text animated style="height: 18px; width: 75%"></ion-skeleton-text>
-  </ng-template>
+    <div *ngIf="loading()" class="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <div>Caricamento giocatori…</div>
+    </div>
+
+    <div *ngIf="!loading()">
+      <div class="cards">
+        <button
+          class="p-card"
+          *ngFor="let p of filtered(); trackBy: trackById"
+          (click)="toggle(p)"
+          [class.sel]="isSelected(p)"
+          type="button"
+        >
+          <div class="p-left">
+            <div class="badge" [attr.data-role]="p.role">{{ p.role }}</div>
+
+            <div class="logo-wrap" *ngIf="p.teamLogo; else txtLogo">
+              <img class="team-logo" [src]="p.teamLogo" [alt]="p.team ?? 'team'" />
+            </div>
+            <ng-template #txtLogo>
+              <div class="logo-wrap text">{{ (p.team ?? '?').slice(0,3).toUpperCase() }}</div>
+            </ng-template>
+          </div>
+
+          <div class="p-mid">
+            <div class="p-name">{{ p.name }}</div>
+            <div class="p-sub">
+              <span class="p-team">{{ p.team || '—' }}</span>
+              <span class="dot">•</span>
+              <span class="p-rate">Voto {{ p.rating }}</span>
+            </div>
+          </div>
+
+          <div class="p-right">
+            <div class="cta" [class.on]="isSelected(p)">
+              <span class="cta-txt">{{ isSelected(p) ? 'Rimuovi' : 'Aggiungi' }}</span>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div class="bottom-spacer"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="bb-left">
+      <div class="bb-title">Rosa</div>
+      <div class="bb-sub">{{ total() }}/25 • {{ complete() ? 'Completa' : 'In corso' }}</div>
+    </div>
+
+    <ion-button class="bb-btn" [disabled]="!complete()" (click)="goFormation()">
+      Vai alla formazione
+    </ion-button>
+  </div>
 </ion-content>
