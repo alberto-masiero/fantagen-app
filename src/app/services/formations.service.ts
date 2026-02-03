@@ -44,5 +44,6 @@ export class FormationService {
       .sort((a, b) => roleOrder[a.role] - roleOrder[b.role] || b.rating - a.rating);
 
     return { module, starters, bench };
+    
   }
 }
