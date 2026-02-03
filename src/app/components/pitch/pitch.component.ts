@@ -72,8 +72,61 @@ export class PitchComponent {
   @Input() module!: Module;
   @Input() starters: Player[] = [];
   // collegamenti drop-list (una lista panchina + tutte le slot)
+ // tipizza in modo super permissivo (zero errori)
+trendArrow(t: any): string {
+  const v = (t ?? '=').toString().trim();
+  if (v === '+') return '↑';
+  if (v === '-') return '↓';
+  return '→';
+}
+
+private normalizeTit(v: any): number | 'I' | 'S' | null {
+  if (v === null || v === undefined) return null;
+  if (v === 'I' || v === 'S') return v;
+
+  if (typeof v === 'number') {
+    let n = v;
+    if (n > 0 && n <= 1) n *= 100;
+    if (n > 100 && n <= 10000) n /= 100;
+    return Math.max(0, Math.min(100, Math.round(n)));
+  }
+
+  let s = String(v).trim().toUpperCase();
+  if (!s) return null;
+  if (s === 'I' || s === 'S') return s as 'I'|'S';
+  if (s.endsWith('%')) s = s.slice(0, -1).trim();
+
+  let n = Number(s.replace(',', '.'));
+  if (!Number.isFinite(n)) return null;
+  if (n > 0 && n <= 1) n *= 100;
+  if (n > 100 && n <= 10000) n /= 100;
+
+  return Math.max(0, Math.min(100, Math.round(n)));
+}
 
 
+titType(p: any): 'num' | 'flag' | 'none' {
+  const v = this.normalizeTit(p?.Tit);
+  if (v === 'I' || v === 'S') return 'flag';
+  if (typeof v === 'number') return 'num';
+  return 'none';
+}
+
+titPercent(p: any): number {
+  const v = this.normalizeTit(p?.Tit);
+  return typeof v === 'number' ? v : 0;
+}
+
+titFlagVal(p: any): 'I'|'S' {
+  const v = this.normalizeTit(p?.Tit);
+  return v === 'S' ? 'S' : 'I';
+}
+
+titTier(v: number): 'low'|'mid'|'high' {
+  if (v < 35) return 'low';
+  if (v < 70) return 'mid';
+  return 'high';
+}
 
   spots(): Spot[] {
     return SPOTS[this.module] ?? [];

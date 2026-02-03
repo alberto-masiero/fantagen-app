@@ -37,29 +37,65 @@
   <ng-container *ngFor="let s of spots(); let i = index">
     <div class="spot" [style.top.%]="s.top" [style.left.%]="s.left">
       <div class="slot" [attr.data-slot]="i">
-        <div
-          class="player"
-          *ngIf="playerAt(i) as p"
-          
-        >
-          <div class="jersey">
-            <div class="collar"></div>
-            <img
-              *ngIf="p.teamLogo; else teamText"
-              class="logo"
-              [src]="p.teamLogo"
-              [alt]="p.team ?? 'team'"
-            />
-            <ng-template #teamText>
-              <div class="num">{{ p.team }}</div>
-            </ng-template>
-          </div>
+      <div class="player" *ngIf="playerAt(i) as p">
 
-          <div class="label">
-            <div class="pname">{{ p.name }}</div>
-            <div class="prate">{{ p.rating }}</div>
-          </div>
+  <div class="badge-card">
+    <!-- riga sopra: jersey + nome + pills -->
+    <div class="top">
+      <div class="jersey">
+        <div class="collar"></div>
+        <img *ngIf="p.teamLogo; else teamText"
+             class="logo"
+             [src]="p.teamLogo"
+             [alt]="p.team ?? 'team'">
+        <ng-template #teamText>
+          <div class="num">{{ (p.team ?? '?') | slice:0:3 }}</div>
+        </ng-template>
+      </div>
+
+      <div class="name-wrap">
+        <div class="pname">{{ p.name }}</div>
+
+        <div class="sub">
+          <span class="mv-pill">MV {{ p.rating }}</span>
+
+          <span class="trend-pill" [attr.data-trend]="(p.trend ?? '=').toString().trim()">
+  {{ trendArrow(p.trend) }}
+</span>
         </div>
+      </div>
+    </div>
+
+    <!-- riga sotto: Titolarità -->
+    <div class="bottom" *ngIf="titType(p) !== 'none'">
+      <ng-container *ngIf="titType(p) === 'num'; else flagTpl">
+        <div class="tit-row">
+          <span class="tit-label">Tit</span>
+          <span class="tit-val">{{ titPercent(p) }}%</span>
+        </div>
+
+      <div class="tit-bar">
+  <div
+    class="tit-fill"
+    [class.low]="titPercent(p) < 35"
+    [class.mid]="titPercent(p) >= 35 && titPercent(p) < 70"
+    [class.high]="titPercent(p) >= 70"
+    [style.width]="titPercent(p) + '%'"
+  ></div>
+</div>
+
+      </ng-container>
+
+      <ng-template #flagTpl>
+        <div class="flag" [attr.data-flag]="titFlagVal(p)">
+          {{ titFlagVal(p) === 'I' ? 'INJ' : 'SUS' }}
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+</div>
+
 
         <div class="player ghost" *ngIf="!playerAt(i)">
           <div class="jersey">

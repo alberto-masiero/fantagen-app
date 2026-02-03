@@ -7,4 +7,8 @@ export interface Player {
   role: Role;
   rating: number; // usato per selezionare i migliori
   teamLogo?: string
+  trend?: Trend;    // '+', '-', '='
+  Tit?: number | 'I' | 'S'; // 1..100 oppure I/S
 }
+
+export type Trend = '+' | '-' | '=';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { map, Observable } from 'rxjs';
-import type { Player } from '../models/player.model';
+import type { Player, Trend } from '../models/player.model';
 import { TeamLogoService } from './teamLogo.service';
 
 type Role = 'GK' | 'DEF' | 'MID' | 'FWD';
@@ -39,6 +39,55 @@ export class PlayerService {
           const n = Number(normalized);
           return Number.isFinite(n) ? n : 0;
         };
+        const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
+
+        const parseTrend = (v: unknown): Trend => {
+          const s = String(v ?? '').trim();
+          if (s === '+' || s === '-' || s === '=') return s as Trend;
+          // a volte si trova "↑" "↓" ecc.
+          if (s === '↑') return '+';
+          if (s === '↓') return '-';
+          return '=';
+        };
+
+   const parseTit = (v: unknown): number | 'I' | 'S' | undefined => {
+  if (v === null || v === undefined) return undefined;
+
+  // se arriva già come numero (XLSX spesso fa così)
+  if (typeof v === 'number') {
+    let n = v;
+
+    // se è in formato 0.7992 (percentuale excel) => 79.92
+    if (n > 0 && n <= 1) n = n * 100;
+
+    // se per qualche motivo è 7992 (errore pregresso o formattazioni strane) => 79.92
+    if (n > 100 && n <= 10000) n = n / 100;
+
+    n = Math.max(0, Math.min(100, Math.round(n)));
+    return n;
+  }
+
+  // stringhe
+  let s = String(v).trim().toUpperCase();
+  if (!s) return undefined;
+
+  if (s === 'I' || s === 'S') return s as 'I' | 'S';
+
+  // "79.92%" o "79,92%"
+  if (s.endsWith('%')) s = s.slice(0, -1).trim();
+
+  // converti virgola in punto, senza togliere i punti (che qui sono decimali)
+  const n0 = Number(s.replace(',', '.'));
+  if (!Number.isFinite(n0)) return undefined;
+
+  let n = n0;
+  if (n > 0 && n <= 1) n = n * 100;
+  if (n > 100 && n <= 10000) n = n / 100;
+
+  n = Math.max(0, Math.min(100, Math.round(n)));
+  return n;
+};
+
 
        type Role = 'GK' | 'DEF' | 'MID' | 'FWD';
 
@@ -91,9 +140,11 @@ if (!role) return null;
             const mv = toNumberIT(get(r, 'Mv', 'MV', 'mv'));
             const rating = fm > 0 ? fm : mv;
 const teamLogo = this.teamLogos.getLogoPath(team) ?? undefined;
+  const trend = parseTrend(get(r, 'trend', 'Trend', 'TREND'));
+            const Tit = parseTit(get(r, 'Tit', 'TIT', 'tit'));
             if (!id || !name) return null;
 
-            const p: Player = { id, name, team, role, rating, teamLogo };
+            const p: Player = { id, name, team, role, rating, teamLogo, trend, Tit };
             return p;
           })
           .filter((p): p is Player => !!p);
