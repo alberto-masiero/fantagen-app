@@ -10,56 +10,120 @@ type Spot = { top: number; left: number };
 
 const SPOTS: Record<Module, Spot[]> = {
   // ordine: GK, DEF..., MID..., FWD...
+
+  /* =========================
+     4-4-2 (più aria tra linee)
+     ========================= */
   '4-4-2': [
-    { top: 92, left: 50 },                 // GK
-    { top: 75, left: 15 }, { top: 75, left: 38 }, { top: 75, left: 62 }, { top: 75, left: 85 }, // DEF 4
-    { top: 52, left: 15 }, { top: 52, left: 38 }, { top: 52, left: 62 }, { top: 52, left: 85 }, // MID 4
-    { top: 28, left: 38 }, { top: 28, left: 62 }, // FWD 2
-  ],
-  '4-3-3': [
-    { top: 92, left: 50 },
-    { top: 75, left: 15 }, { top: 75, left: 38 }, { top: 75, left: 62 }, { top: 75, left: 85 },
-    { top: 52, left: 25 }, { top: 52, left: 50 }, { top: 52, left: 75 },
-    { top: 28, left: 20 }, { top: 24, left: 50 }, { top: 28, left: 80 },
-  ],
-  '4-5-1': [
-    { top: 92, left: 50 },
-    { top: 75, left: 15 }, { top: 75, left: 38 }, { top: 75, left: 62 }, { top: 75, left: 85 },
-    { top: 58, left: 15 }, { top: 52, left: 35 }, { top: 52, left: 50 }, { top: 52, left: 65 }, { top: 58, left: 85 },
-    { top: 26, left: 50 },
-  ],
-  '3-4-3': [
-    { top: 92, left: 50 },
-    { top: 75, left: 25 }, { top: 75, left: 50 }, { top: 75, left: 75 },
-    { top: 52, left: 15 }, { top: 52, left: 38 }, { top: 52, left: 62 }, { top: 52, left: 85 },
-    { top: 28, left: 20 }, { top: 24, left: 50 }, { top: 28, left: 80 },
-  ],
-  '3-5-2': [
-    { top: 92, left: 50 },
-    { top: 75, left: 25 }, { top: 75, left: 50 }, { top: 75, left: 75 },
-    { top: 58, left: 15 }, { top: 52, left: 35 }, { top: 52, left: 50 }, { top: 52, left: 65 }, { top: 58, left: 85 },
-    { top: 28, left: 38 }, { top: 28, left: 62 },
-  ],
-    '5-3-2': [
-    { top: 92, left: 50 }, // GK
-    // DEF 5
-    { top: 76, left: 10 }, { top: 76, left: 30 }, { top: 76, left: 50 }, { top: 76, left: 70 }, { top: 76, left: 90 },
-    // MID 3
-    { top: 52, left: 25 }, { top: 52, left: 50 }, { top: 52, left: 75 },
-    // FWD 2
-    { top: 28, left: 40 }, { top: 28, left: 60 },
+    { top: 88, left: 50 }, // GK (su di ~4)
+
+    // DEF 4 (più larghi)
+    { top: 66, left: 12 }, { top: 66, left: 37 }, { top: 66, left: 63 }, { top: 66, left: 88 },
+
+    // MID 4 (più distanti dalla DEF)
+    { top: 42, left: 12 }, { top: 42, left: 37 }, { top: 42, left: 63 }, { top: 42, left: 88 },
+
+    // ATT 2 (più su e un po’ più distanti)
+    { top: 20, left: 40 }, { top: 20, left: 60 },
   ],
 
-  '5-4-1': [
-    { top: 92, left: 50 }, // GK
-    // DEF 5
-    { top: 76, left: 10 }, { top: 76, left: 30 }, { top: 76, left: 50 }, { top: 76, left: 70 }, { top: 76, left: 90 },
+  /* =========================
+     4-3-3 (ali alte)
+     ========================= */
+  '4-3-3': [
+    { top: 88, left: 50 },
+
+    // DEF 4
+    { top: 66, left: 12 }, { top: 66, left: 37 }, { top: 66, left: 63 }, { top: 66, left: 88 },
+
+    // MID 3 (triangolo largo)
+    { top: 44, left: 25 }, { top: 40, left: 50 }, { top: 44, left: 75 },
+
+    // ATT 3 (ali più aperte ma safe)
+    { top: 18, left: 18 }, { top: 16, left: 50 }, { top: 18, left: 82 },
+  ],
+
+  /* =========================
+     4-5-1 (5 a centro: esterni un filo più bassi)
+     ========================= */
+  '4-5-1': [
+    { top: 88, left: 50 },
+
+    // DEF 4
+    { top: 66, left: 12 }, { top: 66, left: 37 }, { top: 66, left: 63 }, { top: 66, left: 88 },
+
+    // MID 5 (W shape)
+    { top: 48, left: 12 }, { top: 42, left: 32 }, { top: 40, left: 50 }, { top: 42, left: 68 }, { top: 48, left: 88 },
+
+    // ATT 1
+    { top: 18, left: 50 },
+  ],
+
+  /* =========================
+     3-4-3 (esterni larghi, centrali più su)
+     ========================= */
+  '3-4-3': [
+    { top: 88, left: 50 },
+
+    // DEF 3
+    { top: 66, left: 22 }, { top: 66, left: 50 }, { top: 66, left: 78 },
+
     // MID 4
-    { top: 54, left: 15 }, { top: 52, left: 38 }, { top: 52, left: 62 }, { top: 54, left: 85 },
-    // FWD 1
-    { top: 26, left: 50 },
+    { top: 42, left: 12 }, { top: 42, left: 37 }, { top: 42, left: 63 }, { top: 42, left: 88 },
+
+    // ATT 3
+    { top: 18, left: 18 }, { top: 16, left: 50 }, { top: 18, left: 82 },
+  ],
+
+  /* =========================
+     3-5-2 (quinti più bassi, 3 centrali più su)
+     ========================= */
+  '3-5-2': [
+    { top: 88, left: 50 },
+
+    // DEF 3
+    { top: 66, left: 22 }, { top: 66, left: 50 }, { top: 66, left: 78 },
+
+    // MID 5
+    { top: 48, left: 12 }, { top: 42, left: 32 }, { top: 40, left: 50 }, { top: 42, left: 68 }, { top: 48, left: 88 },
+
+    // ATT 2
+    { top: 20, left: 40 }, { top: 20, left: 60 },
+  ],
+
+  /* =========================
+     5-3-2 (quinti larghi, 3 centrali stretti)
+     ========================= */
+  '5-3-2': [
+    { top: 88, left: 50 },
+
+    // DEF 5 (quinti larghi ma safe)
+    { top: 68, left: 10 }, { top: 66, left: 30 }, { top: 66, left: 50 }, { top: 66, left: 70 }, { top: 68, left: 90 },
+
+    // MID 3 (un filo più su e larghi)
+    { top: 42, left: 25 }, { top: 40, left: 50 }, { top: 42, left: 75 },
+
+    // ATT 2
+    { top: 20, left: 40 }, { top: 20, left: 60 },
+  ],
+
+  /* =========================
+     5-4-1 (linee ben staccate)
+     ========================= */
+  '5-4-1': [
+    { top: 88, left: 50 },
+
+    // DEF 5
+    { top: 68, left: 10 }, { top: 66, left: 30 }, { top: 66, left: 50 }, { top: 66, left: 70 }, { top: 68, left: 90 },
+
+    // MID 4
+    { top: 44, left: 12 }, { top: 42, left: 37 }, { top: 42, left: 63 }, { top: 44, left: 88 },
+
+    // ATT 1
+    { top: 18, left: 50 },
   ],
 };
+
 
 @Component({
   selector: 'app-pitch',

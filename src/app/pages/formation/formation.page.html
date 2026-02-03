@@ -107,27 +107,66 @@
         <div class="card-sub">{{ bench().length }} giocatori</div>
       </div>
 
-      <div class="bench-grid">
-        <div class="bench-item" *ngFor="let p of bench()">
-          <div class="bench-left">
-            <div class="logo-wrap">
-              <img *ngIf="p.teamLogo" class="team-logo" [src]="p.teamLogo" [alt]="p.team ?? 'team'">
-              <div *ngIf="!p.teamLogo" class="team-fallback">{{ (p.team ?? '?') | slice:0:3 }}</div>
-            </div>
-          </div>
-
-          <div class="bench-mid">
-            <div class="bench-name">{{ p.name }}</div>
-            <div class="bench-team">{{ p.team }}</div>
-            <div class="bench-team">{{ p.Tit }}</div>
-          </div>
-
-          <div class="bench-right">
-            <div class="pill role">{{ p.role }}</div>
-            <div class="pill rating">{{ p.rating }}</div>
-          </div>
-        </div>
+<div class="bench-grid">
+  <div class="bench-item" *ngFor="let p of bench()">
+    <div class="bench-left">
+      <div class="logo-wrap">
+        <img *ngIf="p.teamLogo" class="team-logo" [src]="p.teamLogo" [alt]="p.team ?? 'team'">
+        <div *ngIf="!p.teamLogo" class="team-fallback">{{ (p.team ?? '?') | slice:0:3 }}</div>
       </div>
+    </div>
+
+   <div class="bench-mid">
+  <div class="bench-name">{{ p.name }}</div>
+  <div class="bench-team">{{ p.team }}</div>
+
+  <!-- trend + MV -->
+  <div class="bench-meta">
+    <div class="bench-mv">MV {{ p.rating | number:'1.2-2' }}</div>
+
+    <div class="bench-trend"
+         [class.up]="p.trend === '+'"
+         [class.down]="p.trend === '-'"
+         [class.eq]="p.trend === '='">
+      <span *ngIf="p.trend === '+'">▲</span>
+      <span *ngIf="p.trend === '-'">▼</span>
+      <span *ngIf="p.trend === '='">—</span>
+    </div>
+  </div>
+
+  <!-- TIT progress -->
+  <div class="bench-progress" *ngIf="p.Tit !== 'I' && p.Tit !== 'S'">
+    <div class="tit-bar bench-tit-bar">
+      <div class="tit-fill"
+           [style.width.%]="p.Tit"
+           [class.low]="p.Tit! < 40"
+           [class.mid]="p.Tit! >= 40 && p.Tit! < 70"
+           [class.high]="p.Tit! >= 70">
+      </div>
+    </div>
+
+    <!-- opzionale: percentuale in piccolo -->
+    <div class="bench-tit-txt">{{ p.Tit | number:'1.0-0' }}%</div>
+  </div>
+
+  <!-- flag -->
+  <div class="bench-progress" *ngIf="p.Tit === 'I' || p.Tit === 'S'">
+    <div class="flag bench-flag"
+         [class.inj]="p.Tit === 'I'"
+         [class.sus]="p.Tit === 'S'">
+      {{ p.Tit === 'I' ? 'Infortunato' : 'Squalificato' }}
+    </div>
+  </div>
+</div>
+
+
+    <div class="bench-right">
+      <div class="pill role">{{ p.role }}</div>
+      <div class="pill rating">{{ p.rating }}</div>
+    </div>
+  </div>
+</div>
+
     </div>
 
     <!-- Spacer per fondo -->
